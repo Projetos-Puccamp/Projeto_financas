@@ -1,11 +1,13 @@
 create database Financas;
+use financas;
 CREATE TABLE Conta (
     ContaID INT PRIMARY KEY AUTO_INCREMENT,
-    EmailLogin VARCHAR(255) NOT NULL,
+    EmailLogin VARCHAR(255) NOT NULL UNIQUE, 
     Senha VARCHAR(255) NOT NULL,
     Nome VARCHAR(255),
     DataNascimento DATE
 );
+
 CREATE TABLE UsuarioSaldo (
     UsuarioSaldoID INT PRIMARY KEY AUTO_INCREMENT,
     ContaID INT,
