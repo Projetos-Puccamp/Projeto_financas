@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'; // Import necessary components
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 const TransferenciaScreen = ({ route }) => {
   const { saldo, setSaldo } = route.params;
   const [valor, setValor] = useState('');
   const [tipo, setTipo] = useState('entrada');
+
+  useEffect(() => {
+    // This useEffect will run whenever saldo changes
+    // You can use it to update the UI or perform other actions
+  }, [saldo]);
 
   const handleTransferencia = () => {
     if (valor !== '') {
@@ -65,60 +70,60 @@ const TransferenciaScreen = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    padding: 16,
-  },
-  headerText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginBottom: 10,
-  },
-  tipoContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  tipoButton: {
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginHorizontal: 5,
-  },
-  tipoSelecionado: {
-    backgroundColor: '#4CAF50',
-  },
-  tipoButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 16,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  saldoText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 20,
-  },
-});
+    container: {
+      flex: 1,
+      backgroundColor: '#ffffff',
+      padding: 16,
+    },
+    headerText: {
+      fontSize: 24,
+      fontWeight: 'bold',
+    },
+    input: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      paddingHorizontal: 10,
+      marginBottom: 10,
+    },
+    tipoContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 10,
+    },
+    tipoButton: {
+      backgroundColor: '#007AFF',
+      padding: 10,
+      borderRadius: 5,
+      flex: 1,
+      marginHorizontal: 5,
+    },
+    tipoSelecionado: {
+      backgroundColor: '#4CAF50',
+    },
+    tipoButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    button: {
+      backgroundColor: '#007AFF',
+      padding: 16,
+      borderRadius: 5,
+      marginBottom: 10,
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    saldoText: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginTop: 20,
+    },
+  });
 
 export default TransferenciaScreen;
