@@ -10,7 +10,7 @@ import TransferenciaScreen from './TransferenciaScreen';
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [saldo, setSaldo] = useState(0); // Initial saldo set to 0
+  const [saldo, setSaldo] = useState(0);
 
   return (
     <NavigationContainer>

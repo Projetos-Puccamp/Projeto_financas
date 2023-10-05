@@ -9,5 +9,7 @@ router.get('/users/loginauto', UserControllers.autoLogin);
 
 //rotas de conta
 router.post('/conta/add', ContaControllers.ADD);
+router.post('/conta/sub', ContaControllers.SUB);
+router.get('/conta/saldo', ContaControllers.SHOW);
 
 module.exports = router;

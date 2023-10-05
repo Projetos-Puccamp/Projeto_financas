@@ -7,28 +7,47 @@ function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const users = [
-    { username: 'miguel', password: '1234' },
-    { username: 'joao', password: 'senha123' },
-    // Add more user accounts as needed
-  ];
 
   const handleLogin = () => {
     // Login logic
-    const user = users.find((user) => user.username === username && user.password === password);
+    var usuario = {
+            email: username,
+            senha: password
+          };
+          // Aqui você pode fazer o que quiser com o objeto 'usuario'
+          // Por exemplo, enviar os dados para o servidor através de uma requisição AJAX
+          const requestOptions = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
 
-    if (user) {
-      Alert.alert('Login bem-sucedido', `Você está conectado como ${user.username}.`);
-      navigation.navigate('Home'); // Navigate to the "Home" screen upon successful login
-    } else {
-      Alert.alert('Erro de login', 'Nome de usuário ou senha incorretos.');
-    }
+            },
+            body: JSON.stringify(usuario),
+            credentials: 'include'
+          };
+          // Realiza a requisição para a API
+          fetch('http://172.16.233.34:3001/api/users/login', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+
+              // Processa a resposta da API
+              if(data.autenticado){
+                    navigation.navigate("Home");
+          } else {
+            // O login falhou, exiba uma mensagem de erro ao usuário
+                    Alert.alert("Credencias invalidas")
+          }
+            })
+            .catch(error => {
+              // Trata erros
+              console.error('Erro:', error);
+            });
   };
 
   const handleSignupPress = () => {
     navigation.navigate('CadastroScreen'); // Use the correct name "CadastroScreen"
   };
-  
+
 
   return (
     <View style={styles.container}>
