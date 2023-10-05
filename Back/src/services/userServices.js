@@ -13,5 +13,20 @@ module.exports = {
           });
         });
       },
+      validarAutoLogin: () => {
+        return new Promise((aceito, rejeitado) => {
+          db.query('SELECT EmailLogin, Senha FROM conta WHERE S_N = ?', ['S'], (error, results) => {
+            if (error) {
+              rejeitado(error);
+              return;
+            }
+            if (results.length > 0) {
+              aceito(results[0]);
+            } else {
+              aceito(null);
+            }
+          });
+        });
+      },
 
 }
