@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import { StatusBar } from 'expo-status-bar';
 
 const TransferenciaScreen = ({ route }) => {
-  const { saldo, setSaldo } = route.params;
+  const [saldo, setSaldo] = useState(route.params.saldo);
   const [valor, setValor] = useState('');
   const [tipo, setTipo] = useState('entrada');
 
@@ -17,11 +17,72 @@ const TransferenciaScreen = ({ route }) => {
       const valorNumerico = parseFloat(valor);
 
       if (tipo === 'entrada') {
-        const novoSaldo = saldo + valorNumerico;
-        setSaldo(novoSaldo);
-      } else if (tipo === 'saida' && saldo >= valorNumerico) {
-        const novoSaldo = saldo - valorNumerico;
-        setSaldo(novoSaldo);
+        var usuario = {
+                    valor: valorNumerico,
+                    idUsuario: 1
+                  };
+                  // Aqui você pode fazer o que quiser com o objeto 'usuario'
+                  // Por exemplo, enviar os dados para o servidor através de uma requisição AJAX
+                  const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+
+                    },
+                    body: JSON.stringify(usuario),
+                    credentials: 'include'
+                  };
+                  // Realiza a requisição para a API
+                  fetch('http://172.16.233.34:3001/api/conta/add', requestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+
+                      // Processa a resposta da API
+                      if(data){
+                                        setSaldo(data.result.novoSaldo);
+                  } else {
+                    // O login falhou, exiba uma mensagem de erro ao usuário
+                         console.log("deu else");
+                  }
+                    })
+                    .catch(error => {
+                      // Trata erros
+                      console.error('Erro:', error);
+                    });
+                    console.log(saldo);
+      } else if (tipo === 'saida') {
+        var usuario = {
+                            valor: valorNumerico,
+                            idUsuario: 1
+                          };
+                          // Aqui você pode fazer o que quiser com o objeto 'usuario'
+                          // Por exemplo, enviar os dados para o servidor através de uma requisição AJAX
+                          const requestOptions = {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+
+                            },
+                            body: JSON.stringify(usuario),
+                            credentials: 'include'
+                          };
+                          // Realiza a requisição para a API
+                          fetch('http://172.16.233.34:3001/api/conta/sub', requestOptions)
+                            .then(response => response.json())
+                            .then(data => {
+
+                              // Processa a resposta da API
+                              if(data){
+                                                setSaldo(data.result.novoSaldo);
+                          } else {
+                            // O login falhou, exiba uma mensagem de erro ao usuário
+                                 console.log("deu else");
+                          }
+                            })
+                            .catch(error => {
+                              // Trata erros
+                              console.error('Erro:', error);
+                            });
       }
 
       setValor('');
