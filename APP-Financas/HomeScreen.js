@@ -1,9 +1,13 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,StatusBar} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
-function HomeScreen({ navigation, saldo, setSaldo }) {
-var meusaldo =0;
-const requestOptions = {
+function HomeScreen({ navigation }) {
+  var [meuSaldo, setMeuSaldo] = useState(0);
+
+  useFocusEffect(
+    React.useCallback(() => {
+    const requestOptions = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -12,51 +16,48 @@ const requestOptions = {
     };
 
     // Realiza a requisição para a API
-    fetch('http://172.16.233.34:3001/api/conta/saldo', requestOptions)
-      .then(response => response.json())
-      .then(data => {
+    fetch('http://192.168.56.1:3001/api/conta/saldo', requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
         // Processa a resposta da API
-        if (data && data.Saldo) {
-          meusaldo = data.Saldo; // Atualize o saldo com o valor da API
-          console.log(meusaldo);
+        if (data) {
+            console.log(data.result[0].Saldo);
+            setMeuSaldo(data.result[0].Saldo); // Atualize o estado com o valor da API
         } else {
-          // O login falhou, exiba uma mensagem de erro ao usuário
-          console.log("deu else");
+          console.log("deu else1");
         }
       })
-      .catch(error => {
+      .catch((error) => {
         // Trata erros
         console.error('Erro:', error);
       });
-    return (
-      <View style={styles.container}>
-        <Text style={styles.headerText}>Meu Banco</Text>
-        <View style={styles.balanceContainer}>
-          <Text style={styles.balanceLabel}>Saldo Disponível</Text>
-          <Text style={styles.balanceAmount}>${meusaldo}</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('CalculatorScreen')}
-        >
-          <Text style={styles.buttonText}>Calculadora de Moedas</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            navigation.navigate('TransferenciaScreen', {
-              saldo: saldo, // Pass the saldo prop
-              setSaldo: setSaldo, // Pass the setSaldo prop
-            })
-          }
-        >
-          <Text style={styles.buttonText}>Transferências</Text>
-        </TouchableOpacity>
-        <StatusBar style="auto" />
+        }, [])
+      );// O segundo argumento vazio faz com que o useEffect seja executado apenas uma vez
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Meu Banco</Text>
+      <View style={styles.balanceContainer}>
+        <Text style={styles.balanceLabel}>Saldo Disponível</Text>
+        <Text style={styles.balanceAmount}>${meuSaldo}</Text>
       </View>
-    );
-  }
-  
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('CalculatorScreen')}
+      >
+        <Text style={styles.buttonText}>Calculadora de Moedas</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('TransferenciaScreen')}
+      >
+        <Text style={styles.buttonText}>Transferências</Text>
+      </TouchableOpacity>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

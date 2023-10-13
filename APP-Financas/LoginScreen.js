@@ -26,7 +26,7 @@ function LoginScreen() {
             credentials: 'include'
           };
           // Realiza a requisição para a API
-          fetch('http://172.16.233.34:3001/api/users/login', requestOptions)
+          fetch('http://192.168.56.1:3001/api/users/login', requestOptions)
             .then(response => response.json())
             .then(data => {
 

@@ -33,13 +33,13 @@ const TransferenciaScreen = ({ route }) => {
                     credentials: 'include'
                   };
                   // Realiza a requisição para a API
-                  fetch('http://172.16.233.34:3001/api/conta/add', requestOptions)
+                  fetch('http://192.168.56.1:3001/api/conta/add', requestOptions)
                     .then(response => response.json())
                     .then(data => {
 
                       // Processa a resposta da API
                       if(data){
-                                        setSaldo(data.result.novoSaldo);
+                        setSaldo(data.result.novoSaldo);
                   } else {
                     // O login falhou, exiba uma mensagem de erro ao usuário
                          console.log("deu else");
@@ -67,7 +67,7 @@ const TransferenciaScreen = ({ route }) => {
                             credentials: 'include'
                           };
                           // Realiza a requisição para a API
-                          fetch('http://172.16.233.34:3001/api/conta/sub', requestOptions)
+                          fetch('http://192.168.56.1:3001/api/conta/sub', requestOptions)
                             .then(response => response.json())
                             .then(data => {
 
