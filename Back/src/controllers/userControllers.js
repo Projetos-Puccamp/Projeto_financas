@@ -34,4 +34,23 @@ login: async (req, res) => {
       res.json({ autenticado: false});
     }
   },
+  cadastro: async (req, res) => {
+    console.log('entrou');
+    let json = { erro: '', result: {} };
+    let nome = req.body.nome;
+    let email = req.body.email;
+    let senha = req.body.senha;
+
+    if (email && senha) {
+      let userCodigo = await UserServices.inserir(nome, email, senha);
+      json.result = {
+        codigo: userCodigo,
+        email,
+        senha
+      };
+    } else {
+      json.erro = 'Campos não enviados';
+    }
+    res.json(json);
+  },
   }
