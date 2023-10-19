@@ -7,6 +7,7 @@ import CalculatorScreen from './CalculatorScreen';
 import CadastroScreen from './CadastroScreen';
 import TransferenciaScreen from './TransferenciaScreen';
 import RecuperacaoSenhaScreen from './RecuperacaoSenhaScreen';
+import RecuperarSenha from './RecuperarSenha';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,10 @@ export default function App() {
                   name="RecuperacaoSenhaScreen"
                   component={RecuperacaoSenhaScreen} // Adicione a nova tela à navegação
                 />
+        <Stack.Screen
+        name="RecuperarSenha"
+        component={RecuperarSenha} // Adicione a nova tela à navegação
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

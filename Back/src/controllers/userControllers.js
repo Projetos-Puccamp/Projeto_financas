@@ -1,6 +1,5 @@
 const UserServices = require('../services/userServices');
 const nodemailer = require('nodemailer');
-const sendgridTransport = require('nodemailer-sendgrid-transport');
 
 module.exports = {
 
@@ -60,7 +59,40 @@ login: async (req, res) => {
     let json = { erro: '', result: {} };
     let email = req.body.email;
     
-    let transporter = nodemailer.createTransport(transport[, defaults])
+    const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+const msg = {
+  to: email, // Change to your recipient
+  from: 'cadurockro@gmail.com', // Change to your verified sender
+  subject: 'Seu código de recuperação de senha',
+  text: 'Seu código é PROJETO',
+  html: '<strong>Seu código é PROJETO</strong>',
+}
+sgMail
+  .send(msg)
+  .then(() => {
+    console.log('Email sent')
+    json.result= true
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+  res.json(json);
 
+  },
+  redefinir2: async (req, res) => {
+    let email = req.body.email;
+    let senha = req.body.senha;
+    let cod = req.body.cod;
+    
+
+    if(cod == 'PROJETO'){
+      let user = await UserServices.atualizarSenha(email, senha);
+      res.json({ autenticado: true,
+      ID: user.UserID,});
+    } else {
+      // Credenciais inválidas, retorna uma resposta de erro
+      res.json({ autenticado: false });
+    }
   },
   }

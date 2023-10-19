@@ -36,5 +36,13 @@ module.exports = {
           });
         });
       },
+      atualizarSenha: (email, senha) => {
+        return new Promise((aceito, rejeitado) => {
+          db.query('UPDATE Usuario SET Senha = ? where EmailLogin = ?', [senha, email], (error, results) => {
+            if (error) { rejeitado(error); return; }
+            aceito(results);
+          });
+        });
+      },
 
 }

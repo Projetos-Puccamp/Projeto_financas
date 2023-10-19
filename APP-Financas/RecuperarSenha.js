@@ -3,13 +3,17 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
 import { Switch } from 'react-native';
 
-function RecuperacaoSenhaScreen({ navigation }) {
+function RecuperarSenha({ navigation }) {
   const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [cod, setCod] = useState('');
 
-  const handleRecuperacaoSenhaScreen = () => {
+  const handleRecuperarSenha = () => {
     console.log('entrou no botão');
     var usuario = {
-                email: email
+                email: email,
+                senha: senha,
+                cod: cod
               };
 
               const requestOptions = {
@@ -22,13 +26,13 @@ function RecuperacaoSenhaScreen({ navigation }) {
                 credentials: 'include'
               };
               // Realiza a requisição para a API
-              fetch('http://192.168.56.1:3001/api/users/redefinir', requestOptions)
+              fetch('http://192.168.56.1:3001/api/users/redefinir2', requestOptions)
                 .then(response => response.json())
                 .then(data => {
 
                   // Processa a resposta da API
                   if(data){
-                        navigation.navigate("RecuperarSenha");
+                        Alert.alert("Senha mudou");
               } else {
                 // O login falhou, exiba uma mensagem de erro ao usuário
                         Alert.alert("Credencias invalidas");
@@ -42,18 +46,36 @@ function RecuperacaoSenhaScreen({ navigation }) {
 
   return (
       <View style={styles.container}>
-        <Text style={styles.headerText}>Esqueci Minha Senha</Text>
+        <Text style={styles.headerText}>Digite seu código e o email utilizado para login</Text>
         <TextInput
           style={styles.input}
-          placeholder="Seu endereço de email"
+          placeholder="Seu email de login"
           onChangeText={(text) => setEmail(text)}
           value={email}
         />
+        <TextInput
+                  style={styles.input}
+                  placeholder="Sua nova senha"
+                  onChangeText={(text) => setSenha(text)}
+                  value={senha}
+                />
+                <TextInput
+                 style={styles.input}
+                 placeholder="Sua nova senha"
+                 onChangeText={(text) => setSenha(text)}
+                value={senha}
+                />
+                <TextInput
+                style={styles.input}
+                placeholder="Código enviado no email"
+                onChangeText={(text) => setCod(text)}
+                value={cod}
+                />
         <TouchableOpacity
           style={styles.button}
-          onPress={handleRecuperacaoSenhaScreen}
+          onPress={handleRecuperarSenha}
         >
-          <Text style={styles.buttonText}>Recuperar</Text>
+          <Text style={styles.buttonText}>Mudar senha</Text>
         </TouchableOpacity>
       </View>
     );
@@ -94,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RecuperacaoSenhaScreen;
+export default RecuperarSenha;
