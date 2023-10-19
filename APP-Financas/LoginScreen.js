@@ -16,8 +16,7 @@ function LoginScreen() {
             email: username,
             senha: password
           };
-          // Aqui você pode fazer o que quiser com o objeto 'usuario'
-          // Por exemplo, enviar os dados para o servidor através de uma requisição AJAX
+
           const requestOptions = {
             method: 'POST',
             headers: {
@@ -37,7 +36,7 @@ function LoginScreen() {
                     navigation.navigate("Home");
           } else {
             // O login falhou, exiba uma mensagem de erro ao usuário
-                    Alert.alert("Credencias invalidas")
+                    Alert.alert("Credencias invalidas");
           }
             })
             .catch(error => {

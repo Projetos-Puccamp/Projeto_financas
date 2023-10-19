@@ -8,7 +8,8 @@ login: async (req, res) => {
 
     if (user) {
       // Credenciais corretas, retorna uma resposta de sucesso
-      res.json({ autenticado: true });
+      res.json({ autenticado: true,
+      ID: user.UserID});
     } else {
       // Credenciais inválidas, retorna uma resposta de erro
       res.json({ autenticado: false });
@@ -37,16 +38,14 @@ login: async (req, res) => {
   cadastro: async (req, res) => {
     console.log('entrou');
     let json = { erro: '', result: {} };
-    let nome = req.body.nome;
     let email = req.body.email;
     let senha = req.body.senha;
 
     if (email && senha) {
-      let userCodigo = await UserServices.inserir(nome, email, senha);
+      let UserID = await UserServices.cadastro(email, senha);
       json.result = {
-        codigo: userCodigo,
-        email,
-        senha
+        codigo: UserID,
+        autenticado: true
       };
     } else {
       json.erro = 'Campos não enviados';

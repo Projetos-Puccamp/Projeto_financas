@@ -4,7 +4,7 @@ module.exports = {
   ADD: (valor, idUsuario) => {
     return new Promise((aceito, rejeitado) => {
       // Recupere o saldo atual da tabela
-      db.query('SELECT Saldo FROM UsuarioSaldo WHERE UsuarioSaldoID = ?', idUsuario, (error, resultados) => {
+      db.query('SELECT Saldo FROM UsuarioSaldo WHERE UserID = ?', idUsuario, (error, resultados) => {
         if (error) {
           rejeitado(error);
           return;
@@ -21,7 +21,7 @@ module.exports = {
         const novoSaldo = saldoAtual + valor;
 
         // Atualize o registro existente com o novo saldo
-        db.query('UPDATE UsuarioSaldo SET Saldo = ? WHERE UsuarioSaldoID = ?', [novoSaldo, idUsuario], (error, resultados) => {
+        db.query('UPDATE UsuarioSaldo SET Saldo = ? WHERE UserID = ?', [novoSaldo, idUsuario], (error, resultados) => {
           if (error) {
             rejeitado(error);
             return;

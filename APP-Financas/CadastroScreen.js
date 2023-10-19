@@ -8,8 +8,29 @@ const CadastroScreen = ({ navigation }) => {
   const handleCadastro = () => {
     // Lógica de cadastro (exemplo: criar uma nova conta)
     if (newUsername && newPassword) {
-      Alert.alert('Cadastro realizado', 'Sua conta foi criada com sucesso.');
-      navigation.goBack(); // Voltar para a tela de login após o cadastro
+      var usuario = {
+              email: newUsername,
+              senha: newPassword
+            };
+            const requestOptions = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(usuario)
+            };
+
+            fetch('http://192.168.56.1:3001/api/users/cadastro', requestOptions)
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                Alert.alert("Cadastro realizado");
+              })
+              .catch(error => {
+                // Trata erros
+                console.error('Erro:', error);
+                Alert.alert("Credencias invalidas")
+              });
     } else {
       Alert.alert('Erro de cadastro', 'Por favor, preencha todos os campos.');
     }

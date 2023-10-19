@@ -5,7 +5,7 @@ module.exports = {
     validarUsuario: (email, senha) => {
         return new Promise((aceito, rejeitado) => {
 
-          db.query('SELECT * FROM Conta WHERE EmailLogin =? AND Senha = ?', [email, senha], (error, results) => {
+          db.query('SELECT * FROM Usuario WHERE EmailLogin =? AND Senha = ?', [email, senha], (error, results) => {
             if (error) { rejeitado(error); return; }
             if (results.length > 0) {
               aceito(results[0]);
@@ -15,7 +15,7 @@ module.exports = {
       },
       validarAutoLogin: () => {
         return new Promise((aceito, rejeitado) => {
-          db.query('SELECT EmailLogin, Senha FROM conta WHERE S_N = ?', ['S'], (error, results) => {
+          db.query('SELECT EmailLogin, Senha FROM Usuario WHERE S_N = ?', ['S'], (error, results) => {
             if (error) {
               rejeitado(error);
               return;
@@ -25,6 +25,14 @@ module.exports = {
             } else {
               aceito(null);
             }
+          });
+        });
+      },
+      cadastro: (email, senha) => {
+        return new Promise((aceito, rejeitado) => {
+          db.query('INSERT INTO Usuario (EmailLogin, Senha) VALUES (?, ?)', [email, senha], (error, results) => {
+            if (error) { rejeitado(error); return; }
+            aceito(results);
           });
         });
       },
