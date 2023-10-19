@@ -5,18 +5,25 @@ import { useFocusEffect, useRoute } from '@react-navigation/native';
 function HomeScreen({ navigation }) {
   var [meuSaldo, setMeuSaldo] = useState(0);
   const route = useRoute();
-    const userID = route.params;
+    const userID = route.params.userID;
 
 
   useFocusEffect(
     React.useCallback(() => {
+    console.log("home print");
+    console.log(userID);
+    var usuario = {
+                userID: userID
+              };
       const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      };
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+
+                      },
+                      body: JSON.stringify(usuario),
+                      credentials: 'include'
+                    };
 
       // Realiza a requisição para a API
       fetch('http://192.168.56.1:3001/api/conta/saldo', requestOptions)
@@ -24,8 +31,9 @@ function HomeScreen({ navigation }) {
         .then((data) => {
           // Processa a resposta da API
           if (data) {
-              console.log(data.result[0].Saldo);
-              setMeuSaldo(data.result[0].Saldo); // Atualize o estado com o valor da API
+          console.log("print data");
+              console.log(data.result.novoSaldo);
+              setMeuSaldo(data.result.novoSaldo); // Atualize o estado com o valor da API
           } else {
             console.log("deu else1");
           }
@@ -52,7 +60,7 @@ function HomeScreen({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('TransferenciaScreen', { userID: userID })}
+        onPress={() => navigation.navigate('TransferenciaScreen', { saldo: meuSaldo, userID: userID })}
       >
         <Text style={styles.buttonText}>Transferências</Text>
       </TouchableOpacity>

@@ -65,13 +65,14 @@ module.exports = {
         });
       });
     },
-    ShowSaldo: () => {
+    ShowSaldo: (userID) => {
         return new Promise((aceito, rejeitado) => {
 
-          db.query('SELECT * FROM UsuarioSaldo', (error, results) => {
+          db.query('SELECT * FROM UsuarioSaldo where UserID = ?',[userID], (error, results) => {
             if (error) { rejeitado(error); return; }
             if (results.length > 0) {
-              aceito(results[0]);
+              const saldo = results[0].Saldo;
+              aceito(saldo);
             } else { aceito(false); }
           });
         });

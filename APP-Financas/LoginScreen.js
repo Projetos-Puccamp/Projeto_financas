@@ -1,31 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+import { useNavigation } from '@react-navigation/native';
 import { Switch } from 'react-native';
 
 function LoginScreen() {
-  const navigation = useNavigation(); // Get the navigation object
+  const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberAccount, setRememberAccount] = useState(false);
 
+  useEffect(() => {
+    // Esta função será executada quando o componente for montado
 
-  const handleLogin = () => {
-    // Login logic
-    var usuario = {
-            email: username,
-            senha: password
-          };
-
-          const requestOptions = {
-            method: 'POST',
+    // Realiza a primeira chamada de API para verificar S_N
+    const requestOptions = {
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-
             },
-            body: JSON.stringify(usuario),
-            credentials: 'include'
+            credentials: 'include',
           };
+    fetch('http://192.168.56.1:3001/api/users/loginauto', requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.autenticado) {
+        console.log("login screen autenticado");
+          navigation.navigate('Home', { userID: data.ID });
+        }
+        // Continue com o login normal
+      })
+      .catch((error) => {
+        console.error('Erro na chamada de API:', error);
+        // Continue com o login normal
+      });
+  }, []);
+
+  const handleLogin = () => {
+    // Login padrão
+    var usuario = {
+            email: username,
+            senha: password,
+            S_N: rememberAccount
+          };
+const requestOptions = {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+
+                },
+                body: JSON.stringify(usuario),
+                credentials: 'include'
+              };
           // Realiza a requisição para a API
           fetch('http://192.168.56.1:3001/api/users/login', requestOptions)
             .then(response => response.json())

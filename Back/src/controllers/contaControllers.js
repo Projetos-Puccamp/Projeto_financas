@@ -4,7 +4,7 @@ module.exports = {
   ADD: async (req, res) => {
         let json = { erro: '', result: {} };
         let valor = req.body.valor;
-        let idUsuario = req.body.idUsuario;
+        let idUsuario = req.body.userID.userID;
 
         if (valor && idUsuario) {
           try {
@@ -29,7 +29,7 @@ module.exports = {
   SUB: async (req, res) => {
       let json = { erro: '', result: {} };
       let valor = req.body.valor;
-      let idUsuario = req.body.idUsuario;
+      let idUsuario = req.body.userID.userID;
 
       if (valor && idUsuario) {
         try {
@@ -53,14 +53,13 @@ module.exports = {
     },
     SHOW: async (req, res) => {
         let json = { erro: '', result: [] };
-        let conta = await ContaServices.ShowSaldo();
-
-          json.result.push({
-            ContaID: conta.ContaID,
-            Saldo: conta.Saldo,
-            TipoConta: conta.TipoConta,
-            Cartao: conta.Cartao
-          });
+        let userID = req.body.userID;
+        console.log(userID);
+        let conta = await ContaServices.ShowSaldo(userID)
+        console.log(conta);
+        json.result = {
+          novoSaldo: conta
+        };
         res.json(json);
 
       },

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
-const TransferenciaScreen = ({ route }) => {
-  const [saldo, setSaldo] = useState(route.params.saldo);
+const TransferenciaScreen = ({ navigation }) => {
   const [valor, setValor] = useState('');
   const [tipo, setTipo] = useState('entrada');
+  const route = useRoute();
+  const userID = route.params.userID;
+  const saldo = route.params.saldo;
+  const [meuSaldo, setMeuSaldo] = useState(saldo);
 
   useEffect(() => {
     // This useEffect will run whenever saldo changes
@@ -19,7 +23,7 @@ const TransferenciaScreen = ({ route }) => {
       if (tipo === 'entrada') {
         var usuario = {
                     valor: valorNumerico,
-                    idUsuario: 1
+                    userID: userID
                   };
                   // Aqui você pode fazer o que quiser com o objeto 'usuario'
                   // Por exemplo, enviar os dados para o servidor através de uma requisição AJAX
@@ -39,7 +43,8 @@ const TransferenciaScreen = ({ route }) => {
 
                       // Processa a resposta da API
                       if(data){
-                        setSaldo(data.result.novoSaldo);
+                        setMeuSaldo(data.result.novoSaldo);
+                        Alert.alert("tranferencia realizada");
                   } else {
                     // O login falhou, exiba uma mensagem de erro ao usuário
                          console.log("deu else");
@@ -49,11 +54,10 @@ const TransferenciaScreen = ({ route }) => {
                       // Trata erros
                       console.error('Erro:', error);
                     });
-                    console.log(saldo);
       } else if (tipo === 'saida') {
         var usuario = {
                             valor: valorNumerico,
-                            idUsuario: 1
+                            userID: userID
                           };
                           // Aqui você pode fazer o que quiser com o objeto 'usuario'
                           // Por exemplo, enviar os dados para o servidor através de uma requisição AJAX
@@ -73,7 +77,7 @@ const TransferenciaScreen = ({ route }) => {
 
                               // Processa a resposta da API
                               if(data){
-                                                setSaldo(data.result.novoSaldo);
+                                                setMeuSaldo(data.result.novoSaldo);
                           } else {
                             // O login falhou, exiba uma mensagem de erro ao usuário
                                  console.log("deu else");
@@ -123,7 +127,6 @@ const TransferenciaScreen = ({ route }) => {
         <Text style={styles.buttonText}>Realizar Transferência</Text>
       </TouchableOpacity>
 
-      <Text style={styles.saldoText}>Saldo: ${saldo}</Text>
 
       <StatusBar style="auto" />
     </View>

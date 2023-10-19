@@ -13,6 +13,6 @@ router.post('/users/redefinir2', UserControllers.redefinir2);
 //rotas de conta
 router.post('/conta/add', ContaControllers.ADD);
 router.post('/conta/sub', ContaControllers.SUB);
-router.get('/conta/saldo', ContaControllers.SHOW);
+router.post('/conta/saldo', ContaControllers.SHOW);
 
 module.exports = router;
