@@ -7,6 +7,7 @@ const ContaControllers = require('./controllers/contaControllers');
 router.post('/users/login', UserControllers.login);
 router.get('/users/loginauto', UserControllers.autoLogin);
 router.post('/users/cadastro', UserControllers.cadastro);
+router.post('/users/redefinir', UserControllers.redefinir);
 
 //rotas de conta
 router.post('/conta/add', ContaControllers.ADD);

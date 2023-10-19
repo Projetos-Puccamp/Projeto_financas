@@ -6,6 +6,7 @@ import LoginScreen from './LoginScreen';
 import CalculatorScreen from './CalculatorScreen';
 import CadastroScreen from './CadastroScreen';
 import TransferenciaScreen from './TransferenciaScreen';
+import RecuperacaoSenhaScreen from './RecuperacaoSenhaScreen';
 
 const Stack = createStackNavigator();
 
@@ -13,31 +14,6 @@ export default function App() {
   var saldo; // Inicialize saldo como null
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    };
-
-    // Realiza a requisição para a API
-    fetch('http://172.16.233.34:3001/api/conta/saldo', requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        // Processa a resposta da API
-        if (data && data.Saldo) {
-          saldo = data.Saldo; // Atualize o saldo com o valor da API
-          console.log(saldo);
-        } else {
-          // O login falhou, exiba uma mensagem de erro ao usuário
-          console.log("deu else");
-        }
-      })
-      .catch(error => {
-        // Trata erros
-        console.error('Erro:', error);
-      });
   }, []); // Adicione um array vazio como segundo argumento para executar o useEffect apenas uma vez
 
   return (
@@ -64,6 +40,10 @@ export default function App() {
           component={TransferenciaScreen}
           initialParams={{ saldo}} // Pass saldo e setSaldo como parâmetros iniciais
         />
+        <Stack.Screen
+                  name="RecuperacaoSenhaScreen"
+                  component={RecuperacaoSenhaScreen} // Adicione a nova tela à navegação
+                />
       </Stack.Navigator>
     </NavigationContainer>
   );

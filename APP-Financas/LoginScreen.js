@@ -33,7 +33,7 @@ function LoginScreen() {
 
               // Processa a resposta da API
               if(data.autenticado){
-                    navigation.navigate("Home");
+                    navigation.navigate("Home", { userID: data.ID });
           } else {
             // O login falhou, exiba uma mensagem de erro ao usuário
                     Alert.alert("Credencias invalidas");
@@ -44,6 +44,7 @@ function LoginScreen() {
               console.error('Erro:', error);
             });
   };
+
 
   const handleSignupPress = () => {
     navigation.navigate('CadastroScreen'); // Use the correct name "CadastroScreen"
@@ -87,9 +88,15 @@ function LoginScreen() {
         >
           <Text style={styles.signupButtonText}>Cadastre-se</Text>
         </TouchableOpacity>
-      </View>
-    );
-  }
+        <TouchableOpacity
+                style={styles.recuperarSenhaButton}
+                onPress={() => navigation.navigate('RecuperacaoSenhaScreen')}
+              >
+                <Text style={styles.recuperarSenhaButtonText}>Esqueci Minha Senha</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }
 
 const styles = StyleSheet.create({
   container: {
@@ -141,6 +148,14 @@ const styles = StyleSheet.create({
   switchLabel: {
     fontSize: 16,
   },
-});
+  recuperarSenhaButton: {
+        marginTop: 10,
+      },
+      recuperarSenhaButtonText: {
+        color: '#007AFF',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+    });
 
 export default LoginScreen;

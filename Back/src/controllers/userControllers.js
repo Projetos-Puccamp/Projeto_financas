@@ -1,4 +1,7 @@
 const UserServices = require('../services/userServices');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+
 module.exports = {
 
 login: async (req, res) => {
@@ -36,7 +39,7 @@ login: async (req, res) => {
     }
   },
   cadastro: async (req, res) => {
-    console.log('entrou');
+    console.log('entrou cadastro');
     let json = { erro: '', result: {} };
     let email = req.body.email;
     let senha = req.body.senha;
@@ -51,5 +54,13 @@ login: async (req, res) => {
       json.erro = 'Campos não enviados';
     }
     res.json(json);
+  },
+  redefinir: async (req, res) => {
+    console.log('entrou redefinir');
+    let json = { erro: '', result: {} };
+    let email = req.body.email;
+    
+    let transporter = nodemailer.createTransport(transport[, defaults])
+
   },
   }
