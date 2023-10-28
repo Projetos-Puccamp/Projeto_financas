@@ -6,8 +6,6 @@ function HomeScreen({ navigation }) {
   var [meuSaldo, setMeuSaldo] = useState(0);
   const route = useRoute();
     const userID = route.params.userID;
-
-
   useFocusEffect(
     React.useCallback(() => {
     console.log("home print");

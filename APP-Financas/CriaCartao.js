@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity,TextInput, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, StatusBar } from 'react-native';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
+
 function CriaCartao({ navigation }) {
   const [cartaoNome, setCartaoNome] = useState('');
   const [cartaoTipo, setCartaoTipo] = useState('Crédito'); // Valor padrão
+  const [cartaoLimite, setCartaoLimite] = useState('');
   const route = useRoute();
   const userID = route.params.userID;
+
   // Função para alternar entre "Crédito" e "Débito"
   const alternarTipo = () => {
     if (cartaoTipo === 'Crédito') {
@@ -14,37 +17,46 @@ function CriaCartao({ navigation }) {
       setCartaoTipo('Crédito');
     }
   };
+
   // Função para cadastrar um novo cartão
   const cadastrarCartao = () => {
     const novoCartao = {
       nome: cartaoNome,
-      userID: userID // Você já possui o userID disponível
+      userID: userID, // Você já possui o userID disponível
     };
-    console.log(userID)
-    // Faça uma requisição para a API para cadastrar o novo cartão
-    fetch('http://192.168.0.104:3001/api/cartao/criacartaoD', {
-    method: 'POST',
-    headers: {
+
+    // Adicione o limite do cartão se o tipo for 'Crédito'
+    if (cartaoTipo === 'Crédito') {
+      novoCartao.limite = parseFloat(cartaoLimite);
+    }
+
+    let apiURL = '';
+
+    if (cartaoTipo === 'Crédito') {
+      apiURL = 'http://192.168.0.104:3001/api/cartao/criacartaoC';
+    } else {
+      apiURL = 'http://192.168.0.104:3001/api/cartao/criacartaoD';
+    }
+
+    fetch(apiURL, {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(novoCartao),
+      },
+      body: JSON.stringify(novoCartao),
     })
-    .then((response) => {
+      .then((response) => {
         if (!response.ok) {
-        throw new Error('A resposta da API não foi bem-sucedida');
+          throw new Error('A resposta da API não foi bem-sucedida');
         }
         return response.json();
-    })
-    .then((data) => {
-        // Processar a resposta da API (por exemplo, atualizar a interface do usuário)
+      })
+      .then((data) => {
         console.log('Cartão cadastrado com sucesso!');
-        // Você pode atualizar a interface ou realizar outras ações aqui
-    })
-    .catch((error) => {
-        // Tratar erros
-    console.error('Erro:', error);
-  });
-
+      })
+      .catch((error) => {
+        console.error('Erro:', error);
+      });
   };
 
   return (
@@ -57,6 +69,15 @@ function CriaCartao({ navigation }) {
         onChangeText={(text) => setCartaoNome(text)}
       />
       <Text style={styles.label}>Tipo de Cartão: {cartaoTipo}</Text>
+      {cartaoTipo === 'Crédito' && (
+        <TextInput
+          style={styles.input}
+          placeholder="Limite do Cartão(Usar ponto)"
+          keyboardType="numeric"
+          value={cartaoLimite}
+          onChangeText={(text) => setCartaoLimite(text)}
+        />
+      )}
       <TouchableOpacity
         style={styles.button}
         onPress={alternarTipo}
