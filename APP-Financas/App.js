@@ -8,6 +8,7 @@ import CadastroScreen from './CadastroScreen';
 import TransferenciaScreen from './TransferenciaScreen';
 import RecuperacaoSenhaScreen from './RecuperacaoSenhaScreen';
 import RecuperarSenha from './RecuperarSenha';
+import CriaCartao from './CriaCartao';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,10 @@ export default function App() {
           name="TransferenciaScreen"
           component={TransferenciaScreen}
           initialParams={{ saldo}} // Pass saldo e setSaldo como parâmetros iniciais
+        />
+        <Stack.Screen
+          name="CriaCartao"
+          component={CriaCartao}
         />
         <Stack.Screen
                   name="RecuperacaoSenhaScreen"

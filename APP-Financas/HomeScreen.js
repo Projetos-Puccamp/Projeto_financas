@@ -26,7 +26,7 @@ function HomeScreen({ navigation }) {
                     };
 
       // Realiza a requisição para a API
-      fetch('http://192.168.56.1:3001/api/conta/saldo', requestOptions)
+      fetch('http://192.168.0.104:3001/api/conta/saldo', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           // Processa a resposta da API
@@ -63,6 +63,12 @@ function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate('TransferenciaScreen', { saldo: meuSaldo, userID: userID })}
       >
         <Text style={styles.buttonText}>Transferências</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('CriaCartao', {userID: userID })}
+      >
+        <Text style={styles.buttonText}>Adicionar Cartão</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
