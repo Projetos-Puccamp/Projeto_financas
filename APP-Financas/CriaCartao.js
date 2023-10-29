@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert, StyleSheet, StatusBar } from 'react-native';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 
 function CriaCartao({ navigation }) {
@@ -33,9 +33,9 @@ function CriaCartao({ navigation }) {
     let apiURL = '';
 
     if (cartaoTipo === 'Crédito') {
-      apiURL = 'http://192.168.0.104:3001/api/cartao/criacartaoC';
+      apiURL = 'http://192.168.56.1:3001/api/cartao/criacartaoC';
     } else {
-      apiURL = 'http://192.168.0.104:3001/api/cartao/criacartaoD';
+      apiURL = 'http://192.168.56.1:3001/api/cartao/criacartaoD';
     }
 
     fetch(apiURL, {
@@ -48,14 +48,17 @@ function CriaCartao({ navigation }) {
       .then((response) => {
         if (!response.ok) {
           throw new Error('A resposta da API não foi bem-sucedida');
+          Alert.alert('Erro de acesso ao servidor!');
         }
         return response.json();
       })
       .then((data) => {
         console.log('Cartão cadastrado com sucesso!');
+        Alert.alert('Cartão cadastrado com sucesso!');
       })
       .catch((error) => {
         console.error('Erro:', error);
+        Alert.alert('Erro ao cadastrar cartão, verifique os dados e tente novamente!');
       });
   };
 
@@ -68,7 +71,7 @@ function CriaCartao({ navigation }) {
         value={cartaoNome}
         onChangeText={(text) => setCartaoNome(text)}
       />
-      <Text style={styles.label}>Tipo de Cartão: {cartaoTipo}</Text>
+      <Text style={styles.label}>Tipo selecionado: {cartaoTipo}</Text>
       {cartaoTipo === 'Crédito' && (
         <TextInput
           style={styles.input}
@@ -83,7 +86,7 @@ function CriaCartao({ navigation }) {
         onPress={alternarTipo}
       >
         <Text style={styles.buttonText}>
-          {cartaoTipo === 'Crédito' ? 'Selecionar Débito' : 'Selecionar Crédito'}
+          {cartaoTipo === 'Crédito' ? 'Trocar tipo ' : 'Trocar tipo'}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity

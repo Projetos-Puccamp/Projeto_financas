@@ -6,12 +6,6 @@ CREATE TABLE Usuario (
     Senha VARCHAR(255) NOT NULL,
     S_N ENUM('true', 'false')
 );
-drop table Usuario;
-drop table UsuarioSaldo;
-INSERT INTO Usuario (Emaillogin, Senha) VALUES ('cadu', '123');
-INSERT INTO Usuario (Emaillogin, Senha) VALUES ('migs', '123');
-INSERT INTO Usuario (Emaillogin, Senha) VALUES ('kauan', '123');
-
 CREATE TABLE UsuarioSaldo (
     UsuarioSaldoID INT PRIMARY KEY AUTO_INCREMENT,
     UserID INT,
@@ -20,12 +14,6 @@ CREATE TABLE UsuarioSaldo (
     Cartao2 DECIMAL(10, 2),
     FOREIGN KEY (UserID) REFERENCES Usuario(UserID)
 );
-use mydb;
-UPDATE conta SET S_N = 'S' WHERE Emaillogin = 'cadu';
-select * from Usuario;
-select * from UsuarioSaldo;
-INSERT INTO UsuarioSaldo (UserID, Saldo) VALUES (1, 100.00);
-INSERT INTO UsuarioSaldo (UserID, Saldo) VALUES (2, 100.00);
 DELIMITER //
 CREATE TRIGGER After_Insert_Usuario
 AFTER INSERT ON Usuario FOR EACH ROW
@@ -35,3 +23,23 @@ BEGIN
   VALUES (NEW.UserID, 0.00, 0.00, 0.00);
 END;
 //
+INSERT INTO Usuario (Emaillogin, Senha) VALUES ('cadu', '123');
+INSERT INTO Usuario (Emaillogin, Senha) VALUES ('migs', '123');
+INSERT INTO Usuario (Emaillogin, Senha) VALUES ('kauan', '123');
+select * from Usuario;
+select * from UsuarioSaldo;
+CREATE TABLE CartaoD (
+    CartaoDID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    Nomecartao VARCHAR(255),
+    Saldo DECIMAL(10, 2),
+    FOREIGN KEY (UserID) REFERENCES Usuario(UserID)
+);
+CREATE TABLE CartaoC (
+    CartaoCID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    Nomecartao VARCHAR(255),
+    limite DECIMAL(10, 2),
+    gasto DECIMAL(10,2),
+    FOREIGN KEY (CartaoCID) REFERENCES Usuario(UserID)
+);

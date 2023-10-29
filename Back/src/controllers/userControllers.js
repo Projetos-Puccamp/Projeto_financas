@@ -28,13 +28,12 @@ login: async (req, res) => {
   autoLogin: async (req, res) => {
     let user = await UserServices.validarAutoLogin();
 
-    console.log(user);
+    console.log("User para AutoLogin:" + user);
 
 
     if (user) {
       // Chama a função validarUsuario para verificar se o usuário existe
       let usuarioEncontrado = await UserServices.validarUsuario(user[0].EmailLogin, user[0].Senha);
-        console.log("cadu");
       if (usuarioEncontrado.S_N == 'true') {
         // Usuário encontrado, retorna uma resposta de sucesso
         res.json({ autenticado: true });
@@ -48,7 +47,7 @@ login: async (req, res) => {
     }
   },
   cadastro: async (req, res) => {
-    console.log('entrou cadastro');
+    console.log('Rota: entrou no controlador Cadastro');
     let json = { erro: '', result: {} };
     let email = req.body.email;
     let senha = req.body.senha;
@@ -65,7 +64,7 @@ login: async (req, res) => {
     res.json(json);
   },
   redefinir: async (req, res) => {
-    console.log('entrou redefinir');
+    console.log('Rota: entrada no controlador Redefinir');
     let json = { erro: '', result: {} };
     let email = req.body.email;
     

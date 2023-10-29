@@ -19,5 +19,6 @@ router.post('/conta/saldo', ContaControllers.SHOW);
 //rota cartao
 router.post('/cartao/criacartaoD', CartaoControllers.criacartaoD);
 router.post('/cartao/criacartaoC', CartaoControllers.criacartaoC);
+router.post('/cartao/list', CartaoControllers.listAll);
 
 module.exports = router;

@@ -4,7 +4,7 @@ module.exports = {
   ADD: async (req, res) => {
         let json = { erro: '', result: {} };
         let valor = req.body.valor;
-        let idUsuario = req.body.userID.userID;
+        let idUsuario = req.body.userID;
 
         if (valor && idUsuario) {
           try {
@@ -29,7 +29,7 @@ module.exports = {
   SUB: async (req, res) => {
       let json = { erro: '', result: {} };
       let valor = req.body.valor;
-      let idUsuario = req.body.userID.userID;
+      let idUsuario = req.body.userID;
 
       if (valor && idUsuario) {
         try {

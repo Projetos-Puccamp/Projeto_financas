@@ -24,5 +24,15 @@ criacartaoD: async (req, res) => {
       res.json({ autenticado: true,
       ID: user.UserID,});
     
+  },
+  listAll: async (req, res) => {
+    let userID = req.body.userID;
+    try {
+      const results = await cartaoServices.listAll(userID);
+      res.status(200).json(results);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erro ao buscar cartões de débito.' });
+    }
   }
 }

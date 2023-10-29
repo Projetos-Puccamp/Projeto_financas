@@ -23,7 +23,7 @@ module.exports = {
             if (results.length > 0) {
               aceito(results);
             } else {
-              console.log("retorno do else");
+              console.log("AutoLogin não validado");
               aceito(null);
             }
           });

@@ -25,8 +25,6 @@ const TransferenciaScreen = ({ navigation }) => {
                     valor: valorNumerico,
                     userID: userID
                   };
-                  // Aqui você pode fazer o que quiser com o objeto 'usuario'
-                  // Por exemplo, enviar os dados para o servidor através de uma requisição AJAX
                   const requestOptions = {
                     method: 'POST',
                     headers: {
