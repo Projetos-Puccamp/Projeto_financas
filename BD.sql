@@ -28,6 +28,11 @@ INSERT INTO Usuario (Emaillogin, Senha) VALUES ('migs', '123');
 INSERT INTO Usuario (Emaillogin, Senha) VALUES ('kauan', '123');
 select * from Usuario;
 select * from UsuarioSaldo;
+select * from CartaoD;
+select * from CartaoC;
+SELECT SUM(Saldo) FROM CartaoD WHERE UserID = 1;
+SELECT SUM(limite) FROM CartaoC WHERE UserID = 1;
+delete from cartaoD where cartaoDID = 2;
 CREATE TABLE CartaoD (
     CartaoDID INT PRIMARY KEY AUTO_INCREMENT,
     UserID INT,
