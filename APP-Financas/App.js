@@ -9,6 +9,7 @@ import TransferenciaScreen from './TransferenciaScreen';
 import RecuperacaoSenhaScreen from './RecuperacaoSenhaScreen';
 import RecuperarSenha from './RecuperarSenha';
 import CriaCartao from './CriaCartao';
+import TransferenciaScreenC from './TransferenciaScreenC';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,11 @@ export default function App() {
         name="RecuperarSenha"
         component={RecuperarSenha} // Adicione a nova tela à navegação
         />
+        <Stack.Screen
+                  name="TransferenciaScreenC"
+                  component={TransferenciaScreenC}
+                  initialParams={{ saldo}} // Pass saldo e setSaldo como parâmetros iniciais
+                />
       </Stack.Navigator>
     </NavigationContainer>
   );

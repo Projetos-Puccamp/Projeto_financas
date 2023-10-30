@@ -14,6 +14,8 @@ router.post('/users/redefinir2', UserControllers.redefinir2);
 //rotas de conta
 router.post('/conta/addD', ContaControllers.ADDD);
 router.post('/conta/subD', ContaControllers.SUBD);
+router.post('/conta/addC', ContaControllers.ADDC);
+router.post('/conta/subC', ContaControllers.SUBC);
 router.post('/conta/saldo', ContaControllers.SHOW);
 
 //rota cartao

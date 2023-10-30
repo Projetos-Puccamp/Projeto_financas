@@ -16,7 +16,7 @@ const TransferenciaScreen = ({ navigation }) => {
     if (valor !== '') {
       const valorNumerico = parseFloat(valor);
 
-      if (tipo === 'entrada') {
+      if (tipo === 'gastar') {
         var usuario = {
                     valor: valorNumerico,
                     cardData: cardData
@@ -48,7 +48,7 @@ const TransferenciaScreen = ({ navigation }) => {
                       // Trata erros
                       console.error('Erro:', error);
                     });
-      } else if (tipo === 'saida') {
+      } else if (tipo === 'pagar') {
         var usuario = {
                             valor: valorNumerico,
                             cardData: cardData
@@ -102,16 +102,16 @@ const TransferenciaScreen = ({ navigation }) => {
 
       <View style={styles.tipoContainer}>
         <TouchableOpacity
-          style={[styles.tipoButton, tipo === 'entrada' && styles.tipoSelecionado]}
-          onPress={() => setTipo('entrada')}
+          style={[styles.tipoButton, tipo === 'gastar' && styles.tipoSelecionado]}
+          onPress={() => setTipo('gastar')}
         >
-          <Text style={styles.tipoButtonText}>Entrada</Text>
+          <Text style={styles.tipoButtonText}>Gastar</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tipoButton, tipo === 'saida' && styles.tipoSelecionado]}
-          onPress={() => setTipo('saida')}
+          style={[styles.tipoButton, tipo === 'pagar' && styles.tipoSelecionado]}
+          onPress={() => setTipo('pagar')}
         >
-          <Text style={styles.tipoButtonText}>Saída</Text>
+          <Text style={styles.tipoButtonText}>Pagar</Text>
         </TouchableOpacity>
       </View>
 
