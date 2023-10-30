@@ -24,7 +24,7 @@ function HomeScreen({ navigation }) {
                     };
 
       // Realiza a requisição para a API
-      fetch('http://192.168.56.1:3001/api/conta/saldo', requestOptions)
+      fetch('http://192.168.0.104:3001/api/conta/saldo', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           // Processa a resposta da API
@@ -88,7 +88,7 @@ function HomeScreen({ navigation }) {
             body: JSON.stringify(usuario),
             credentials: 'include'
         };
-        fetch('http://192.168.56.1:3001/api/cartao/list', requestOptions)
+        fetch('http://192.168.0.104:3001/api/cartao/list', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if(data){
@@ -104,31 +104,35 @@ function HomeScreen({ navigation }) {
       }, [])
            );
 
-      return (
-        <View style={styles.cardListContainer}>
-          <Text style={styles.cardListHeader}>Meus Cartões De Débito:</Text>
-          <FlatList
-            data={cards}
-            keyExtractor={(item) => item.CartaoDID.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.cardItem}>
-                <View style={styles.textContainer}>
-                  <Text style={styles.cardName}>{item.Nomecartao}</Text>
-                  <Text style={styles.cardNumber}>Saldo: ${item.Saldo}</Text>
-                </View>
-                <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate('TransferenciaScreen', {cardData: item})}
-                      >
-                        <Text style={styles.buttonText}>Adicionar Cartão</Text>
-                      </TouchableOpacity>
-              </View>
-            )}
-          />
-        </View>
-      );
-    }
-
+           return (
+            <FlatList
+              data={[{ key: 'header', text: 'Meus Cartões De Débito:' }, ...cards]}
+              keyExtractor={(item) => item.key}
+              renderItem={({ item }) => {
+                if (item.key === 'header') {
+                  return (
+                    <Text style={styles.cardListHeader}>{item.text}</Text>
+                  );
+                }
+                return (
+                  <View style={styles.cardItem}>
+                    <View style={styles.textContainer}>
+                      <Text style={styles.cardName}>{item.Nomecartao}</Text>
+                      <Text style={styles.cardNumber}>Saldo: ${item.Saldo}</Text>
+                    </View>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => navigation.navigate('TransferenciaScreen', { cardData: item })}
+                    >
+                      <Text style={styles.buttonText}>Entrar</Text>
+                    </TouchableOpacity>
+                  </View>
+                );
+              }}
+            />
+          );
+          
+            }
     function CardListC({userID}) {
             const [cardsC, setCardsC] = useState([]);
             const route = useRoute();
@@ -147,7 +151,7 @@ function HomeScreen({ navigation }) {
                 body: JSON.stringify(usuario),
                 credentials: 'include'
             };
-            fetch('http://192.168.56.1:3001/api/cartao/listC', requestOptions)
+            fetch('http://192.168.0.104:3001/api/cartao/listC', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     if(data){
@@ -163,30 +167,34 @@ function HomeScreen({ navigation }) {
           }, [])
                );
 
-          return (
-            <View style={styles.cardListContainer}>
-              <Text style={styles.cardListHeader}>Meus Cartões De Crédito:</Text>
-              <FlatList
-                data={cardsC}
-                keyExtractor={(item) => item.CartaoCID.toString()}
-                renderItem={({ item }) => (
-                  <View style={styles.cardItem}>
-                    <View style={styles.textContainer}>
-                      <Text style={styles.cardName}>{item.Nomecartao}</Text>
-                      <Text style={styles.cardNumber}>Limite disponível:${item.limiteDisponivel}</Text>
-                    </View>
-                    <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => navigation.navigate('TransferenciaScreenC', {cardData: item})}
-                          >
-                            <Text style={styles.buttonText}>Adicionar Cartão</Text>
-                          </TouchableOpacity>
-                  </View>
-                )}
-              />
-            </View>
-          );
-        }
+               return (
+                <FlatList
+                  data={[{ key: 'header', text: 'Meus Cartões de Crédito:' }, ...cardsC]}
+                  keyExtractor={(item) => item.key}
+                  renderItem={({ item }) => {
+                    if (item.key === 'header') {
+                      return (
+                        <Text style={styles.cardListHeader}>{item.text}</Text>
+                      );
+                    }
+                    return (
+                      <View style={styles.cardItem}>
+                        <View style={styles.textContainer}>
+                          <Text style={styles.cardName}>{item.Nomecartao}</Text>
+                          <Text style={styles.cardNumber}>Limite disponível: ${item.limiteDisponivel}</Text>
+                        </View>
+                        <TouchableOpacity
+                          style={styles.button}
+                          onPress={() => navigation.navigate('TransferenciaScreenC', { cardData: item })}
+                        >
+                          <Text style={styles.buttonText}>Entrar</Text>
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  }}
+                />
+              );
+                }              
 const styles = StyleSheet.create({
   container: {
     flex: 1,
