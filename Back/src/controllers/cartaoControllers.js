@@ -34,5 +34,22 @@ criacartaoD: async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Erro ao buscar cartões de débito.' });
     }
+  },
+  listAllC: async (req, res) => {
+    let userID = req.body.userID;
+    try {
+      const results = await cartaoServices.listAllC(userID);
+  
+      // Mapeie os resultados e calcule a diferença entre o limite e o gasto
+      const cartoes = results.map((cartao) => ({
+        ...cartao,
+        limiteDisponivel: cartao.limite - cartao.gasto,
+      }));
+  
+      res.status(200).json(cartoes);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erro ao buscar cartões de crédito.' });
+    }
   }
 }

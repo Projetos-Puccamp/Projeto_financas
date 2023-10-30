@@ -27,5 +27,16 @@ module.exports = {
             }
           });
         });
+      },
+      listAllC: (userID) => {
+        return new Promise((aceito, rejeitado) => {
+          db.query(`SELECT * FROM CartaoC WHERE UserID = ${userID}`, (err, results) => {
+            if (err) {
+              rejeitado(err); // Rejeita a promessa em caso de erro
+            } else {
+              aceito(results); // Resolve a promessa com os resultados da consulta
+            }
+          });
+        });
       }
   };

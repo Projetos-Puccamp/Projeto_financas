@@ -12,13 +12,14 @@ router.post('/users/redefinir', UserControllers.redefinir);
 router.post('/users/redefinir2', UserControllers.redefinir2);
 
 //rotas de conta
-router.post('/conta/add', ContaControllers.ADD);
-router.post('/conta/sub', ContaControllers.SUB);
+router.post('/conta/addD', ContaControllers.ADDD);
+router.post('/conta/subD', ContaControllers.SUBD);
 router.post('/conta/saldo', ContaControllers.SHOW);
 
 //rota cartao
 router.post('/cartao/criacartaoD', CartaoControllers.criacartaoD);
 router.post('/cartao/criacartaoC', CartaoControllers.criacartaoC);
 router.post('/cartao/list', CartaoControllers.listAll);
+router.post('/cartao/listC', CartaoControllers.listAllC);
 
 module.exports = router;

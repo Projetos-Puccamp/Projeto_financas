@@ -31,7 +31,7 @@ const TransferenciaScreen = ({ navigation }) => {
                     credentials: 'include'
                   };
                   // Realiza a requisição para a API
-                  fetch('http://192.168.56.1:3001/api/conta/addD', requestOptions)
+                  fetch('http://192.168.56.1:3001/api/conta/addC', requestOptions)
                     .then(response => response.json())
                     .then(data => {
 
@@ -65,7 +65,7 @@ const TransferenciaScreen = ({ navigation }) => {
                             credentials: 'include'
                           };
                           // Realiza a requisição para a API
-                          fetch('http://192.168.56.1:3001/api/conta/subD', requestOptions)
+                          fetch('http://192.168.56.1:3001/api/conta/subC', requestOptions)
                             .then(response => response.json())
                             .then(data => {
 

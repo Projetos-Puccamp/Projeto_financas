@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, StatusBar } from 'react-native';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useRoute, useNavigation } from '@react-navigation/native';
 
 function HomeScreen({ navigation }) {
   var [meuSaldo, setMeuSaldo] = useState(0);
@@ -58,30 +58,27 @@ function HomeScreen({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('TransferenciaScreen', { saldo: meuSaldo, userID: userID })}
-      >
-        <Text style={styles.buttonText}>Transferências</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
         onPress={() => navigation.navigate('CriaCartao', {userID: userID })}
       >
         <Text style={styles.buttonText}>Adicionar Cartão</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
       <CardList userID={userID} />
+      <CardListC userID={userID} />
         </View>
       );
     }
 
     // Componente para listar os cartões
-    function CardList({ userID }) {
-      const [cards, setCards] = useState([]);
-
-      useEffect(() => {
-        var usuario = {
-            userID: userID
-        };
+    function CardList({userID}) {
+        const [cards, setCards] = useState([]);
+        const route = useRoute();
+        const navigation = useNavigation();
+        useFocusEffect(
+        React.useCallback(() => {
+            var usuario = {
+                userID: userID
+            };
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -104,7 +101,8 @@ function HomeScreen({ navigation }) {
             .catch(error => {
             console.error('Erro:', error);
             });
-      }, [userID]);
+      }, [])
+           );
 
       return (
         <View style={styles.cardListContainer}>
@@ -114,15 +112,81 @@ function HomeScreen({ navigation }) {
             keyExtractor={(item) => item.CartaoDID.toString()}
             renderItem={({ item }) => (
               <View style={styles.cardItem}>
-                <Text style={styles.cardName}>{item.Nomecartao}</Text>
-                <Text style={styles.cardNumber}>{item.Saldo}</Text>
-                {/* Outras informações do cartão, se necessário */}
+                <View style={styles.textContainer}>
+                  <Text style={styles.cardName}>{item.Nomecartao}</Text>
+                  <Text style={styles.cardNumber}>Saldo: ${item.Saldo}</Text>
+                </View>
+                <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('TransferenciaScreen', {cardData: item})}
+                      >
+                        <Text style={styles.buttonText}>Adicionar Cartão</Text>
+                      </TouchableOpacity>
               </View>
             )}
           />
         </View>
       );
     }
+
+    function CardListC({userID}) {
+            const [cardsC, setCardsC] = useState([]);
+            const route = useRoute();
+            const navigation = useNavigation();
+            useFocusEffect(
+            React.useCallback(() => {
+                var usuario = {
+                    userID: userID
+                };
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: JSON.stringify(usuario),
+                credentials: 'include'
+            };
+            fetch('http://192.168.56.1:3001/api/cartao/listC', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    if(data){
+                        setCardsC(data);
+                        console.log('Dados definidos:', data);
+                    } else {
+                        console.log("Sem data");
+                    }
+                })
+                .catch(error => {
+                console.error('Erro:', error);
+                });
+          }, [])
+               );
+
+          return (
+            <View style={styles.cardListContainer}>
+              <Text style={styles.cardListHeader}>Meus Cartões De Crédito:</Text>
+              <FlatList
+                data={cardsC}
+                keyExtractor={(item) => item.CartaoCID.toString()}
+                renderItem={({ item }) => (
+                  <View style={styles.cardItem}>
+                    <View style={styles.textContainer}>
+                      <Text style={styles.cardName}>{item.Nomecartao}</Text>
+                      <Text style={styles.cardNumber}>Limite disponível:${item.limiteDisponivel}</Text>
+                    </View>
+                    <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => navigation.navigate('TransferenciaScreenC', {cardData: item})}
+                          >
+                            <Text style={styles.buttonText}>Adicionar Cartão</Text>
+                          </TouchableOpacity>
+                  </View>
+                )}
+              />
+            </View>
+          );
+        }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -168,19 +232,25 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
       },
       cardItem: {
-        backgroundColor: '#f0f0f0',
-        padding: 10,
-        borderRadius: 5,
-        marginVertical: 5,
-      },
-      cardName: {
-        fontSize: 16,
-        fontWeight: 'bold',
-      },
-      cardNumber: {
-        fontSize: 14,
-        color: '#333',
-      },
+          flexDirection: 'row', // Define o layout como linha
+          justifyContent: 'space-between', // Distribui o espaço entre os elementos
+          alignItems: 'center', // Alinha os elementos verticalmente ao centro
+          backgroundColor: '#f0f0f0',
+          padding: 10,
+          borderRadius: 5,
+          marginVertical: 5,
+        },
+        textContainer: {
+          flex: 1, // Permite que o texto ocupe o espaço disponível
+        },
+        cardName: {
+          fontSize: 16,
+          fontWeight: 'bold',
+        },
+        cardNumber: {
+          fontSize: 14,
+          color: '#333',
+        },
     });
 
 export default HomeScreen;
