@@ -46,5 +46,5 @@ CREATE TABLE CartaoC (
     Nomecartao VARCHAR(255),
     limite DECIMAL(10, 2),
     gasto DECIMAL(10,2),
-    FOREIGN KEY (CartaoCID) REFERENCES Usuario(UserID)
+    FOREIGN KEY (UserID) REFERENCES Usuario(UserID)
 );

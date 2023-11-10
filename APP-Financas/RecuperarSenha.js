@@ -11,75 +11,75 @@ function RecuperarSenha({ navigation }) {
   const handleRecuperarSenha = () => {
     console.log('entrou no botão');
     var usuario = {
-                email: email,
-                senha: senha,
-                cod: cod
-              };
+      email: email,
+      senha: senha,
+      cod: cod
+    };
 
-              const requestOptions = {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
 
-                },
-                body: JSON.stringify(usuario),
-                credentials: 'include'
-              };
-              // Realiza a requisição para a API
-              fetch('http://192.168.0.104:3001/api/users/redefinir2', requestOptions)
-                .then(response => response.json())
-                .then(data => {
+      },
+      body: JSON.stringify(usuario),
+      credentials: 'include'
+    };
+    // Realiza a requisição para a API
+    fetch('http://192.168.0.110:3001/api/users/redefinir2', requestOptions)
+      .then(response => response.json())
+      .then(data => {
 
-                  // Processa a resposta da API
-                  if(data){
-                        Alert.alert("Senha mudou");
-              } else {
-                // O login falhou, exiba uma mensagem de erro ao usuário
-                        Alert.alert("Credencias invalidas");
-              }
-                })
-                .catch(error => {
-                  // Trata erros
-                  console.error('Erro:', error);
-                });
+        // Processa a resposta da API
+        if (data) {
+          Alert.alert("Senha mudou");
+        } else {
+          // O login falhou, exiba uma mensagem de erro ao usuário
+          Alert.alert("Credencias invalidas");
+        }
+      })
+      .catch(error => {
+        // Trata erros
+        console.error('Erro:', error);
+      });
   };
 
   return (
-      <View style={styles.container}>
-        <Text style={styles.headerText}>Digite seu código e o email utilizado para login</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Seu email de login"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-        />
-        <TextInput
-                  style={styles.input}
-                  placeholder="Sua nova senha"
-                  onChangeText={(text) => setSenha(text)}
-                  value={senha}
-                />
-                <TextInput
-                 style={styles.input}
-                 placeholder="Sua nova senha"
-                 onChangeText={(text) => setSenha(text)}
-                value={senha}
-                />
-                <TextInput
-                style={styles.input}
-                placeholder="Código enviado no email"
-                onChangeText={(text) => setCod(text)}
-                value={cod}
-                />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleRecuperarSenha}
-        >
-          <Text style={styles.buttonText}>Mudar senha</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Digite seu código e o email utilizado para login</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Seu email de login"
+        onChangeText={(text) => setEmail(text)}
+        value={email}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Sua nova senha"
+        onChangeText={(text) => setSenha(text)}
+        value={senha}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Sua nova senha"
+        onChangeText={(text) => setSenha(text)}
+        value={senha}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Código enviado no email"
+        onChangeText={(text) => setCod(text)}
+        value={cod}
+      />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleRecuperarSenha}
+      >
+        <Text style={styles.buttonText}>Mudar senha</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

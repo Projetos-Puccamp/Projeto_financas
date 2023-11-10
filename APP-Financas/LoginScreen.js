@@ -20,7 +20,7 @@ function LoginScreen() {
             },
             credentials: 'include',
           };
-    fetch('http://192.168.0.104:3001/api/users/loginauto', requestOptions)
+    fetch('http://192.168.0.110:3001/api/users/loginauto', requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.autenticado) {
@@ -52,7 +52,7 @@ const requestOptions = {
                 credentials: 'include'
               };
           // Realiza a requisição para a API
-          fetch('http://192.168.0.104:3001/api/users/login', requestOptions)
+    fetch('http://192.168.0.110:3001/api/users/login', requestOptions)
             .then(response => response.json())
             .then(data => {
 

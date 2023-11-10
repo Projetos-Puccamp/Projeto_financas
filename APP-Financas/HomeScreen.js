@@ -24,7 +24,7 @@ function HomeScreen({ navigation }) {
                     };
 
       // Realiza a requisição para a API
-      fetch('http://192.168.0.104:3001/api/conta/saldo', requestOptions)
+      fetch('http://192.168.0.110:3001/api/conta/saldo', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           // Processa a resposta da API
@@ -88,7 +88,7 @@ function HomeScreen({ navigation }) {
             body: JSON.stringify(usuario),
             credentials: 'include'
         };
-        fetch('http://192.168.0.104:3001/api/cartao/list', requestOptions)
+          fetch('http://192.168.0.110:3001/api/cartao/list', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if(data){
@@ -151,7 +151,7 @@ function HomeScreen({ navigation }) {
                 body: JSON.stringify(usuario),
                 credentials: 'include'
             };
-            fetch('http://192.168.0.104:3001/api/cartao/listC', requestOptions)
+              fetch('http://192.168.0.110:3001/api/cartao/listC', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     if(data){
