@@ -10,6 +10,7 @@ import RecuperacaoSenhaScreen from './RecuperacaoSenhaScreen';
 import RecuperarSenha from './RecuperarSenha';
 import CriaCartao from './CriaCartao';
 import TransferenciaScreenC from './TransferenciaScreenC';
+import CalculadoraFinanciamentoScreen from './CalculadoraFinanScreen';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,10 @@ export default function App() {
         <Stack.Screen
           name="CriaCartao"
           component={CriaCartao}
+        />
+        <Stack.Screen
+          name="CalcFinan"
+          component={CalculadoraFinanciamentoScreen}
         />
         <Stack.Screen
                   name="RecuperacaoSenhaScreen"

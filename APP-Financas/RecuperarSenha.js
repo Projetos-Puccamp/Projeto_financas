@@ -26,7 +26,7 @@ function RecuperarSenha({ navigation }) {
       credentials: 'include'
     };
     // Realiza a requisição para a API
-    fetch('http://192.168.0.110:3001/api/users/redefinir2', requestOptions)
+    fetch('http://192.168.151.187:3001/api/users/redefinir2', requestOptions)
       .then(response => response.json())
       .then(data => {
 

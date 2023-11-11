@@ -22,7 +22,7 @@ function RecuperacaoSenhaScreen({ navigation }) {
                 credentials: 'include'
               };
               // Realiza a requisição para a API
-    fetch('http://192.168.0.110:3001/api/users/redefinir', requestOptions)
+    fetch('http://192.168.151.187:3001/api/users/redefinir', requestOptions)
                 .then(response => response.json())
                 .then(data => {
 
