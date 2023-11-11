@@ -11,6 +11,9 @@ import RecuperarSenha from './RecuperarSenha';
 import CriaCartao from './CriaCartao';
 import TransferenciaScreenC from './TransferenciaScreenC';
 import CalculadoraFinanciamentoScreen from './CalculadoraFinanScreen';
+import FinanciamentoScreen from './FinanScreen';
+import AcompanhaFinan from './AcompanhaFinan';
+import CriaFinan from './CriaFinan';
 
 const Stack = createStackNavigator();
 
@@ -49,8 +52,20 @@ export default function App() {
           component={CriaCartao}
         />
         <Stack.Screen
+          name="Financiamento"
+          component={FinanciamentoScreen}
+        />
+        <Stack.Screen
+        name="AcompanhaFinanciamento"
+        component={AcompanhaFinan}
+      />
+        <Stack.Screen
           name="CalcFinan"
           component={CalculadoraFinanciamentoScreen}
+        />
+        <Stack.Screen
+          name="CriaFinan"
+          component={CriaFinan}
         />
         <Stack.Screen
                   name="RecuperacaoSenhaScreen"

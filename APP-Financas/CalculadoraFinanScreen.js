@@ -11,8 +11,7 @@ const CalculadoraFinanciamentoScreen = ({ navigation }) => {
     if (valorFinanciamento && taxaDeJuros && prazoFinanciamento) {
       const principal = parseFloat(valorFinanciamento);
       const taxa = parseFloat(taxaDeJuros) / 100 / 12;
-      const prazo = parseFloat(prazoFinanciamento) * 12;
-
+      const prazo = parseFloat(prazoFinanciamento);
       const parcelaMensal = (principal * taxa) / (1 - Math.pow(1 + taxa, -prazo));
       setParcelaMensal(parcelaMensal.toFixed(2));
     } else {
@@ -42,7 +41,7 @@ const CalculadoraFinanciamentoScreen = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
-        placeholder="Prazo do Financiamento (Anos)"
+        placeholder="Prazo do Financiamento (Meses)"
         keyboardType="numeric"
         onChangeText={(text) => setPrazoFinanciamento(text)}
         value={prazoFinanciamento}

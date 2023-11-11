@@ -3,6 +3,7 @@ const router = express.Router();
 const UserControllers = require('./controllers/userControllers');
 const ContaControllers = require('./controllers/contaControllers');
 const CartaoControllers = require('./controllers/cartaoControllers');
+const financiamentoControllers = require('./controllers/financiamentoControllers');
 
 //rotas de usuario
 router.post('/users/login', UserControllers.login);
@@ -19,10 +20,15 @@ router.post('/conta/subC', ContaControllers.SUBC);
 router.post('/conta/saldo', ContaControllers.SHOW);
 router.post('/conta/credito', ContaControllers.SHOWC);
 router.post('/conta/gasto', ContaControllers.SHOWG);
+
 //rota cartao
 router.post('/cartao/criacartaoD', CartaoControllers.criacartaoD);
 router.post('/cartao/criacartaoC', CartaoControllers.criacartaoC);
 router.post('/cartao/list', CartaoControllers.listAll);
 router.post('/cartao/listC', CartaoControllers.listAllC);
+
+//rota de financiamento
+router.post('/financiamento/criafinanciamento', financiamentoControllers.criafinanciamento);
+router.post('/financiamento/listfinanciamento', financiamentoControllers.listAll);
 
 module.exports = router;

@@ -96,11 +96,11 @@ function HomeScreen({ navigation }) {
       ) : (
         <View style={styles.balanceContainer}>
           <Text style={styles.balanceLabel}>Saldo Disponível</Text>
-          <Text style={styles.balanceAmount}>***</Text>
+          <Text style={styles.balanceAmount}>*****</Text>
           <Text style={styles.balanceLabel}>Crédito Disponível</Text>
-          <Text style={styles.balanceAmount}>***</Text>
+          <Text style={styles.balanceAmount}>*****</Text>
            <Text style={styles.balanceLabel}>Crédito Disponível</Text>
-          <Text style={styles.balanceAmount}>***</Text>
+          <Text style={styles.balanceAmount}>*****</Text>
         </View>
       )}
 
@@ -118,9 +118,9 @@ function HomeScreen({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('CalcFinan', { userID: userID })}
+        onPress={() => navigation.navigate('Financiamento', { userID: userID })}
       >
-        <Text style={styles.buttonText}>Calculadora de Financiamento</Text>
+        <Text style={styles.buttonText}>Financiamento</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
       <CardList userID={userID} />
@@ -321,4 +321,4 @@ const styles = StyleSheet.create({
         },
     });
 
-export default HomeScreen
+export default HomeScreen;
