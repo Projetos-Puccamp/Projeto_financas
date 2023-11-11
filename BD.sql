@@ -48,3 +48,15 @@ CREATE TABLE CartaoC (
     gasto DECIMAL(10,2),
     FOREIGN KEY (UserID) REFERENCES Usuario(UserID)
 );
+CREATE TABLE Financiamento (
+    FinanciamentoID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    ValorTotal DECIMAL(10, 2),
+    ParcelasTotais INT,
+    ParcelasRestantes INT,
+    ValorParcela DECIMAL(10, 2),
+    TaxaJuros DECIMAL(5, 2),
+    ValorPagoTotal DECIMAL(10, 2),
+    DataInicio DATE,
+    FOREIGN KEY (UserID) REFERENCES Usuario(UserID)
+);
