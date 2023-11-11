@@ -20,7 +20,7 @@ const CadastroScreen = ({ navigation }) => {
               body: JSON.stringify(usuario)
             };
 
-      fetch('http://192.168.0.110:3001/api/users/cadastro', requestOptions)
+      fetch('http://192.168.151.187:3001/api/users/cadastro', requestOptions)
               .then(response => response.json())
               .then(data => {
                 console.log(data);

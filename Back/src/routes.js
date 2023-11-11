@@ -17,7 +17,8 @@ router.post('/conta/subD', ContaControllers.SUBD);
 router.post('/conta/addC', ContaControllers.ADDC);
 router.post('/conta/subC', ContaControllers.SUBC);
 router.post('/conta/saldo', ContaControllers.SHOW);
-
+router.post('/conta/credito', ContaControllers.SHOWC);
+router.post('/conta/gasto', ContaControllers.SHOWG);
 //rota cartao
 router.post('/cartao/criacartaoD', CartaoControllers.criacartaoD);
 router.post('/cartao/criacartaoC', CartaoControllers.criacartaoC);

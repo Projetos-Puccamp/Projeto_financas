@@ -1,55 +1,109 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList, StatusBar } from 'react-native';
+import { View, Text,Image, TouchableOpacity, StyleSheet, FlatList, StatusBar } from 'react-native';
 import { useFocusEffect, useRoute, useNavigation } from '@react-navigation/native';
 
 function HomeScreen({ navigation }) {
-  var [meuSaldo, setMeuSaldo] = useState(0);
+  const [meuSaldo, setMeuSaldo] = useState(0);
+  const [meuCredito, setMeuCredito] = useState(0);
+  const [meuGasto, setMeuGasto] = useState(0);
+  const [mostrarValores, setMostrarValores] = useState(false); 
   const route = useRoute();
-    const userID = route.params.userID;
+  const userID = route.params.userID;
+
   useFocusEffect(
     React.useCallback(() => {
-    console.log("home userID:");
-    console.log(userID);
-    var usuario = {
-                userID: userID
-              };
-      const requestOptions = {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
+      var usuario = {
+        userID: userID
+      };
 
-                      },
-                      body: JSON.stringify(usuario),
-                      credentials: 'include'
-                    };
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(usuario),
+        credentials: 'include'
+      };
 
       // Realiza a requisição para a API
-      fetch('http://192.168.0.110:3001/api/conta/saldo', requestOptions)
+      fetch('http://192.168.151.187:3001/api/conta/saldo', requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          // Processa a resposta da API
           if (data) {
-          console.log("Saldo recebido:");
-              console.log(data.result.novoSaldo);
-              setMeuSaldo(data.result.novoSaldo); // Atualize o estado com o valor da API
+            console.log("Saldo recebido:");
+            console.log(data.result.novoSaldo);
+            setMeuSaldo(data.result.novoSaldo);
           } else {
             console.log("Data == false na chamada de show");
           }
         })
         .catch((error) => {
-          // Trata erros
+          console.error('Erro:', error);
+        });
+      fetch('http://192.168.151.187:3001/api/conta/credito', requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            console.log("Credito recebido:");
+            console.log(data.result.novoCredito);
+            setMeuCredito(data.result.novoCredito);
+          } else {
+            console.log("Data == false na chamada de show");
+          }
+        })
+        .catch((error) => {
+          console.error('Erro:', error);
+        });
+        fetch('http://192.168.151.187:3001/api/conta/gasto', requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            console.log("Credito recebido:");
+            console.log(data.result.novoGasto);
+            setMeuGasto(data.result.novoGasto);
+          } else {
+            console.log("Data == false na chamada de show");
+          }
+        })
+        .catch((error) => {
           console.error('Erro:', error);
         });
     }, [])
-  ); // O segundo argumento vazio faz com que o useEffect seja executado apenas uma vez
+  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Meu Banco</Text>
-      <View style={styles.balanceContainer}>
-        <Text style={styles.balanceLabel}>Saldo Disponível</Text>
-        <Text style={styles.balanceAmount}>${meuSaldo}</Text>
-      </View>
+      <TouchableOpacity
+        style={styles.showHideButton}
+        onPress={() => setMostrarValores(!mostrarValores)}
+      >
+        <Image
+          source={require('./assets/Icone.png')} // Substitua pelo caminho da sua imagem
+          style={{ ...styles.showHideImage, resizeMode: 'contain', width: 25, height: 25 }}
+        />
+      </TouchableOpacity>
+  
+      {mostrarValores ? (
+        <View style={styles.balanceContainer}>
+          <Text style={styles.balanceLabel}>Saldo Disponível</Text>
+          <Text style={styles.balanceAmount}>${meuSaldo}</Text>
+          <Text style={styles.balanceLabel}>Crédito Disponível</Text>
+          <Text style={styles.balanceAmount}>${meuCredito}</Text>
+          <Text style={styles.balanceLabel}>Credito gasto</Text>
+          <Text style={styles.balanceAmount}>${meuGasto}</Text>
+        </View>
+      ) : (
+        <View style={styles.balanceContainer}>
+          <Text style={styles.balanceLabel}>Saldo Disponível</Text>
+          <Text style={styles.balanceAmount}>***</Text>
+          <Text style={styles.balanceLabel}>Crédito Disponível</Text>
+          <Text style={styles.balanceAmount}>***</Text>
+           <Text style={styles.balanceLabel}>Crédito Disponível</Text>
+          <Text style={styles.balanceAmount}>***</Text>
+        </View>
+      )}
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('CalculatorScreen')}
@@ -58,16 +112,22 @@ function HomeScreen({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('CriaCartao', {userID: userID })}
+        onPress={() => navigation.navigate('CriaCartao', { userID: userID })}
       >
         <Text style={styles.buttonText}>Adicionar Cartão</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('CalcFinan', { userID: userID })}
+      >
+        <Text style={styles.buttonText}>Calculadora de Financiamento</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
       <CardList userID={userID} />
       <CardListC userID={userID} />
-        </View>
-      );
-    }
+    </View>
+  );
+}
 
     // Componente para listar os cartões
     function CardList({userID}) {
@@ -88,7 +148,7 @@ function HomeScreen({ navigation }) {
             body: JSON.stringify(usuario),
             credentials: 'include'
         };
-          fetch('http://192.168.0.110:3001/api/cartao/list', requestOptions)
+          fetch('http://192.168.151.187:3001/api/cartao/list', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if(data){
@@ -151,7 +211,7 @@ function HomeScreen({ navigation }) {
                 body: JSON.stringify(usuario),
                 credentials: 'include'
             };
-              fetch('http://192.168.0.110:3001/api/cartao/listC', requestOptions)
+              fetch('http://192.168.151.187:3001/api/cartao/listC', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     if(data){
@@ -261,4 +321,4 @@ const styles = StyleSheet.create({
         },
     });
 
-export default HomeScreen;
+export default HomeScreen
