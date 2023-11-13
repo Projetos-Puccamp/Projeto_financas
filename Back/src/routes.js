@@ -7,7 +7,7 @@ const financiamentoControllers = require('./controllers/financiamentoControllers
 
 //rotas de usuario
 router.post('/users/login', UserControllers.login);
-router.get('/users/loginauto', UserControllers.autoLogin);
+//router.get('/users/loginauto', UserControllers.autoLogin);
 router.post('/users/cadastro', UserControllers.cadastro);
 router.post('/users/redefinir', UserControllers.redefinir);
 router.post('/users/redefinir2', UserControllers.redefinir2);
@@ -30,5 +30,6 @@ router.post('/cartao/listC', CartaoControllers.listAllC);
 //rota de financiamento
 router.post('/financiamento/criafinanciamento', financiamentoControllers.criafinanciamento);
 router.post('/financiamento/listfinanciamento', financiamentoControllers.listAll);
-
+router.post('/financiamento/pagarfinan',financiamentoControllers.PagamentoFinanciamento);
+router.post('/financiamento/estender',financiamentoControllers.EstenderPrazo);
 module.exports = router;

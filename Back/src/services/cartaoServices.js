@@ -11,6 +11,7 @@ module.exports = {
       },
       criacartaoC: (nome,limite, userID) => {
         return new Promise((aceito, rejeitado) => {
+          console.log("id do ususario "+userID);
           db.query('INSERT INTO CartaoC (UserID,limite,Nomecartao,gasto) VALUES (?, ?, ?,?)', [userID,limite, nome,'0.00'], (error, results) => {
             if (error) { rejeitado(error); return; }
             aceito(results);

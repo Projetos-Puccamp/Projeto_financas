@@ -29,5 +29,39 @@ criafinanciamento: async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Erro ao buscar cartões de débito.' });
     }
-  }
-}
+  },
+
+  PagamentoFinanciamento: async (req, res) => {
+     let  finanId = req.body.FinanId; 
+
+     try {
+      const results = await financiamentoServices.RealizarPagamento(finanId);
+      res.status(200).json(results);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erro ao alterar os dados.' });
+    }
+  },
+
+  EstenderPrazo: async (req, res) => {
+    let NovonumMeses = parseInt(req.body.NumMeses) + parseInt(req.body.NumMesesE);
+    let  valorTotal = parseInt(req.body.ValorT);
+    let  finanId = req.body.FinanId;
+    let juros = parseFloat(req.body.Juros);
+    console.log('NovonumMeses:', NovonumMeses);
+    console.log('valorTotal:', valorTotal);
+    console.log('finanId:', finanId);
+    console.log('juros:', juros);
+    let novoparcela = (valorTotal * juros) / (1 - Math.pow(1 + juros, -NovonumMeses));
+    console.log(novoparcela);
+    try {
+     const results = await financiamentoServices.AtualizarFinanciamento(novoparcela,finanId,NovonumMeses);
+     res.status(200).json(results);
+   } catch (error) {
+     console.error(error);
+     res.status(500).json({ message: 'Erro ao alterar os dados.' });
+   }
+ }
+
+
+};

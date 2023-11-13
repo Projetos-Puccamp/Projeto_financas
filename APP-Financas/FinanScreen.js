@@ -45,7 +45,7 @@ function ListFinan({userID}) {
         body: JSON.stringify(usuario),
         credentials: 'include'
     };
-      fetch('http://192.168.151.187:3001/api/financiamento/listfinanciamento', requestOptions)
+      fetch('http://10.0.2.2:3001/api/financiamento/listfinanciamento', requestOptions)
         .then(response => response.json())
         .then(data => {
             if(data){
@@ -74,6 +74,7 @@ function ListFinan({userID}) {
             return (
               <View style={styles.cardItem}>
                 <View style={styles.textContainer}>
+                <Text style={styles.cardNumber}>ID: {item.FinanciamentoID}</Text>
                   <Text style={styles.cardNumber}>Nome: {item.Nomefinan}</Text>
                   <Text style={styles.cardNumber}>Valor Pego: {item.ValorTotal}</Text>
                   <Text style={styles.cardNumber}>Total de Parcelas: {item.QuantidadeParcelas}</Text>

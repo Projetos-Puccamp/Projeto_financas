@@ -8,7 +8,7 @@ function CriaCartao({ navigation }) {
   const [cartaoLimite, setCartaoLimite] = useState('');
   const route = useRoute();
   const userID = route.params.userID;
-
+  console.log('ID DO USER '+userID);
   // Função para alternar entre "Crédito" e "Débito"
   const alternarTipo = () => {
     if (cartaoTipo === 'Crédito') {
@@ -33,9 +33,9 @@ function CriaCartao({ navigation }) {
     let apiURL = '';
 
     if (cartaoTipo === 'Crédito') {
-      apiURL = 'http://192.168.151.187:3001/api/cartao/criacartaoC';
+      apiURL = 'http://10.0.2.2:3001/api/cartao/criacartaoC';
     } else {
-      apiURL = 'http://192.168.151.187:3001/api/cartao/criacartaoD';
+      apiURL = 'http://10.0.2.2:3001/api/cartao/criacartaoD';
     }
 
     fetch(apiURL, {
