@@ -16,24 +16,21 @@ module.exports = {
           rejeitado('Usuário não encontrado');
           return;
         }
-        const saldoAtual = resultados[0].Saldo;
-
-        // Calcule o novo saldo somando o saldo atual com o novo valor
-        const novoSaldo = saldoAtual + valor;
-
-        // Atualize o registro existente com o novo saldo
-        db.query('UPDATE CartaoD SET Saldo = ? WHERE UserID = ? AND CartaoDID = ?', [novoSaldo,cardData.UserID, cardData.CartaoDID], (error, resultados) => {
+          const saldoAtual = parseFloat(resultados[0].Saldo);
+         // Calcule o novo saldo somando o saldo atual com o novo valor
+          const novoSaldo = saldoAtual + valor;
+          // Atualize o registro existente com o novo saldo
+          db.query('UPDATE CartaoD SET Saldo = ? WHERE UserID = ? AND CartaoDID = ?', [novoSaldo,cardData.UserID, cardData.CartaoDID], (error, resultados) => {
           if (error) {
             rejeitado(error);
             return;
           }
-
-          // Após a atualização, retorne o novo saldo atualizado
-          aceito(novoSaldo);
+            // Após a atualização, retorne o novo saldo atualizado
+            aceito(novoSaldo);
+          });
         });
       });
-    });
-  },
+    },
   SUBD: (valor, cardData) => {
     return new Promise((aceito, rejeitado) => {
       // Recupere o saldo atual da tabela
@@ -58,7 +55,8 @@ module.exports = {
         }
           // Calcule o novo saldo somando o saldo atual com o novo valor
           const novoSaldo = saldoAtual - valor;
-
+          console.log(valor);
+          console.log(novoSaldo);
           // Atualize o registro existente com o novo saldo
           db.query('UPDATE CartaoD SET Saldo = ? WHERE UserID = ? AND CartaoDID = ?', [novoSaldo,cardData.UserID, cardData.CartaoDID], (error, resultados) => {
           if (error) {
@@ -156,7 +154,7 @@ module.exports = {
               rejeitado('Usuário não encontrado');
               return;
             }
-              const saldoAtual = resultados[0].gasto;
+            const saldoAtual = parseFloat(resultados[0].gasto);
               const novolim = saldoAtual + valor;
             if(novolim > resultados[0].limite){
               console.log("Sem limite disponivel");

@@ -26,7 +26,7 @@ function HomeScreen({ navigation }) {
       };
 
       // Realiza a requisição para a API
-      fetch('http://10.0.2.2:3001/api/conta/saldo', requestOptions)
+      fetch('http://192.168.151.187:3001/api/conta/saldo', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -40,7 +40,7 @@ function HomeScreen({ navigation }) {
         .catch((error) => {
           console.error('Erro:', error);
         });
-      fetch('http://10.0.2.2:3001/api/conta/credito', requestOptions)
+      fetch('http://192.168.151.187:3001/api/conta/credito', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -54,7 +54,7 @@ function HomeScreen({ navigation }) {
         .catch((error) => {
           console.error('Erro:', error);
         });
-        fetch('http://10.0.2.2:3001/api/conta/gasto', requestOptions)
+        fetch('http://192.168.151.187:3001/api/conta/gasto', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -148,7 +148,7 @@ function HomeScreen({ navigation }) {
             body: JSON.stringify(usuario),
             credentials: 'include'
         };
-          fetch('http://10.0.2.2:3001/api/cartao/list', requestOptions)
+          fetch('http://192.168.151.187:3001/api/cartao/list', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if(data){
@@ -211,7 +211,7 @@ function HomeScreen({ navigation }) {
                 body: JSON.stringify(usuario),
                 credentials: 'include'
             };
-              fetch('http://10.0.2.2:3001/api/cartao/listC', requestOptions)
+              fetch('http://192.168.151.187:3001/api/cartao/listC', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     if(data){
