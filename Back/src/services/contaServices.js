@@ -1,7 +1,7 @@
 const db = require('../db');
 
 module.exports = {
-  ADDD: (valor, cardData) => {
+  ADDD: (valor, cardData, motivo) => {
     return new Promise((aceito, rejeitado) => {
       // Recupere o saldo atual da tabela
       db.query('SELECT Saldo FROM CartaoD WHERE UserID = ? AND CartaoDID = ?', [cardData.UserID, cardData.CartaoDID], (error, resultados) => {
@@ -25,13 +25,19 @@ module.exports = {
             rejeitado(error);
             return;
           }
+          db.query('INSERT INTO Transacoes (Detalhe, Valor,Tipo,UserID,CartaoDID) VALUES (?, ?,?,?,?)', [motivo,valor,'Entrada',cardData.UserID, cardData.CartaoDID], (error, resultados) => {
+            if (error) {
+              rejeitado(error);
+              return;
+           }
+          });
             // Após a atualização, retorne o novo saldo atualizado
             aceito(novoSaldo);
           });
         });
       });
     },
-  SUBD: (valor, cardData) => {
+  SUBD: (valor, cardData, motivo) => {
     return new Promise((aceito, rejeitado) => {
       // Recupere o saldo atual da tabela
       db.query('SELECT Saldo FROM CartaoD WHERE UserID = ? AND CartaoDID = ?', [cardData.UserID, cardData.CartaoDID], (error, resultados) => {
@@ -63,7 +69,12 @@ module.exports = {
             rejeitado(error);
             return;
           }
-
+          db.query('INSERT INTO Transacoes (Detalhe, Valor,Tipo,UserID,CartaoDID) VALUES (?,?,?,?,?)', [motivo,valor,'Saída',cardData.UserID, cardData.CartaoDID], (error, resultados) => {
+            if (error) {
+              rejeitado(error);
+              return;
+           }
+          });
             // Após a atualização, retorne o novo saldo atualizado
             aceito(novoSaldo);
           });

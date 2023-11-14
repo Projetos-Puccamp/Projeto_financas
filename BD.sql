@@ -59,3 +59,14 @@ CREATE TABLE Financiamento (
     ParcelasPagas INT,
     FOREIGN KEY (UserID) REFERENCES Usuario(UserID)
 );
+select * from Transacoes;
+CREATE TABLE Transacoes (
+    TransacaoID INT PRIMARY KEY AUTO_INCREMENT,
+    Detalhe VARCHAR(255),
+    Valor DECIMAL(10, 2),
+    Tipo VARCHAR(255),
+    UserID INT,
+    CartaoDID INT,
+    FOREIGN KEY (UserID) REFERENCES Usuario(UserID),
+    FOREIGN KEY (CartaoDID) REFERENCES CartaoD(CartaoDID)
+);

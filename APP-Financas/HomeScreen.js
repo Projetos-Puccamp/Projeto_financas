@@ -26,7 +26,7 @@ function HomeScreen({ navigation }) {
       };
 
       // Realiza a requisição para a API
-      fetch('http://192.168.151.187:3001/api/conta/saldo', requestOptions)
+      fetch('http://192.168.15.32:3001/api/conta/saldo', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -40,7 +40,7 @@ function HomeScreen({ navigation }) {
         .catch((error) => {
           console.error('Erro:', error);
         });
-      fetch('http://192.168.151.187:3001/api/conta/credito', requestOptions)
+      fetch('http://192.168.15.32:3001/api/conta/credito', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -54,7 +54,7 @@ function HomeScreen({ navigation }) {
         .catch((error) => {
           console.error('Erro:', error);
         });
-        fetch('http://192.168.151.187:3001/api/conta/gasto', requestOptions)
+        fetch('http://192.168.15.32:3001/api/conta/gasto', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -99,7 +99,7 @@ function HomeScreen({ navigation }) {
           <Text style={styles.balanceAmount}>*****</Text>
           <Text style={styles.balanceLabel}>Crédito Disponível</Text>
           <Text style={styles.balanceAmount}>*****</Text>
-           <Text style={styles.balanceLabel}>Crédito Disponível</Text>
+           <Text style={styles.balanceLabel}>Crédito Gasto</Text>
           <Text style={styles.balanceAmount}>*****</Text>
         </View>
       )}
@@ -148,7 +148,7 @@ function HomeScreen({ navigation }) {
             body: JSON.stringify(usuario),
             credentials: 'include'
         };
-          fetch('http://192.168.151.187:3001/api/cartao/list', requestOptions)
+          fetch('http://192.168.15.32:3001/api/cartao/list', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if(data){
@@ -211,7 +211,7 @@ function HomeScreen({ navigation }) {
                 body: JSON.stringify(usuario),
                 credentials: 'include'
             };
-              fetch('http://192.168.151.187:3001/api/cartao/listC', requestOptions)
+              fetch('http://192.168.15.32:3001/api/cartao/listC', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     if(data){
@@ -266,25 +266,27 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   balanceContainer: {
-    marginTop: 20,
+    marginTop: 10, // Diminuir a margem superior
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
-    paddingBottom: 10,
+    paddingBottom: 5, // Diminuir o espaçamento interno inferior
   },
   balanceLabel: {
-    fontSize: 16,
+    fontSize: 14, // Reduzir o tamanho da fonte
     color: '#333',
+    marginBottom: 5, // Reduzir a margem inferior
   },
   balanceAmount: {
-    fontSize: 24,
+    fontSize: 18, // Reduzir o tamanho da fonte
     fontWeight: 'bold',
     color: '#007AFF',
   },
   button: {
     backgroundColor: '#007AFF',
-    padding: 16,
+    paddingVertical: 5, // Reduzir o espaçamento vertical interno
+    paddingHorizontal:5, // Reduzir o espaçamento horizontal interno
     borderRadius: 5,
-    marginTop: 20,
+    marginTop: 4  , // Diminuir a margem superior
   },
   buttonText: {
     color: 'white',

@@ -5,16 +5,18 @@ module.exports = {
         let json = { erro: '', result: {} };
         let valor = req.body.valor;
         let cardData = req.body.cardData;
+        let motivo = req.body.motivo;
         console.log("Valores recebidos no add:", cardData +" valor: ",valor);
-        if (valor && cardData) {
+        if (valor && cardData && motivo) {
           try {
             // Chama o serviço para atualizar o saldo
-            const novoSaldo = await ContaServices.ADDD(valor, cardData);
+            const novoSaldo = await ContaServices.ADDD(valor, cardData,motivo);
 
             // Inclui o novo saldo na resposta JSON
             json.result = {
               valor,
-              novoSaldo
+              novoSaldo,
+              motivo
             };
           } catch (error) {
             json.erro = 'Erro ao atualizar o saldo da conta';
@@ -29,16 +31,18 @@ module.exports = {
     let json = { erro: '', result: {} };
     let valor = req.body.valor;
     let cardData = req.body.cardData;
+    let motivo = req.body.motivo;
     console.log("Valores recebidos no sub:", cardData +" valor: ",valor);
-    if (valor && cardData) {
+    if (valor && cardData && motivo) {
       try {
         // Chama o serviço para atualizar o saldo
-        const novoSaldo = await ContaServices.SUBD(valor, cardData);
+        const novoSaldo = await ContaServices.SUBD(valor, cardData, motivo);
 
         // Inclui o novo saldo na resposta JSON
         json.result = {
           valor,
-          novoSaldo
+          novoSaldo,
+          motivo
         };
       } catch (error) {
         json.erro = 'Erro ao atualizar o saldo da conta';
