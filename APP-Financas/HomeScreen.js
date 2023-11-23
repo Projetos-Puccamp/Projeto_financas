@@ -24,9 +24,7 @@ function HomeScreen({ navigation }) {
         body: JSON.stringify(usuario),
         credentials: 'include'
       };
-
-      // Realiza a requisição para a API
-      fetch('http://192.168.15.32:3001/api/conta/saldo', requestOptions)
+      fetch('http://192.168.0.104:3001/api/conta/saldo', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -40,7 +38,7 @@ function HomeScreen({ navigation }) {
         .catch((error) => {
           console.error('Erro:', error);
         });
-      fetch('http://192.168.15.32:3001/api/conta/credito', requestOptions)
+      fetch('http://192.168.0.104:3001/api/conta/credito', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -54,7 +52,7 @@ function HomeScreen({ navigation }) {
         .catch((error) => {
           console.error('Erro:', error);
         });
-        fetch('http://192.168.15.32:3001/api/conta/gasto', requestOptions)
+        fetch('http://192.168.0.104:3001/api/conta/gasto', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -79,7 +77,7 @@ function HomeScreen({ navigation }) {
         onPress={() => setMostrarValores(!mostrarValores)}
       >
         <Image
-          source={require('./assets/Icone.png')} // Substitua pelo caminho da sua imagem
+          source={require('./assets/Icone.png')}
           style={{ ...styles.showHideImage, resizeMode: 'contain', width: 25, height: 25 }}
         />
       </TouchableOpacity>
@@ -128,8 +126,6 @@ function HomeScreen({ navigation }) {
     </View>
   );
 }
-
-    // Componente para listar os cartões
     function CardList({userID}) {
         const [cards, setCards] = useState([]);
         const route = useRoute();
@@ -148,7 +144,7 @@ function HomeScreen({ navigation }) {
             body: JSON.stringify(usuario),
             credentials: 'include'
         };
-          fetch('http://192.168.15.32:3001/api/cartao/list', requestOptions)
+          fetch('http://192.168.0.104:3001/api/cartao/list', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if(data){
@@ -211,7 +207,7 @@ function HomeScreen({ navigation }) {
                 body: JSON.stringify(usuario),
                 credentials: 'include'
             };
-              fetch('http://192.168.15.32:3001/api/cartao/listC', requestOptions)
+              fetch('http://192.168.0.104:3001/api/cartao/listC', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     if(data){
@@ -266,27 +262,27 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   balanceContainer: {
-    marginTop: 10, // Diminuir a margem superior
+    marginTop: 10, 
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
-    paddingBottom: 5, // Diminuir o espaçamento interno inferior
+    paddingBottom: 5, 
   },
   balanceLabel: {
-    fontSize: 14, // Reduzir o tamanho da fonte
+    fontSize: 14, 
     color: '#333',
-    marginBottom: 5, // Reduzir a margem inferior
+    marginBottom: 5, 
   },
   balanceAmount: {
-    fontSize: 18, // Reduzir o tamanho da fonte
+    fontSize: 18, 
     fontWeight: 'bold',
     color: '#007AFF',
   },
   button: {
     backgroundColor: '#007AFF',
-    paddingVertical: 5, // Reduzir o espaçamento vertical interno
-    paddingHorizontal:5, // Reduzir o espaçamento horizontal interno
+    paddingVertical: 5, 
+    paddingHorizontal:5,
     borderRadius: 5,
-    marginTop: 4  , // Diminuir a margem superior
+    marginTop: 4  , 
   },
   buttonText: {
     color: 'white',
@@ -302,16 +298,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
       },
       cardItem: {
-          flexDirection: 'row', // Define o layout como linha
-          justifyContent: 'space-between', // Distribui o espaço entre os elementos
-          alignItems: 'center', // Alinha os elementos verticalmente ao centro
+          flexDirection: 'row', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
           backgroundColor: '#f0f0f0',
           padding: 10,
           borderRadius: 5,
           marginVertical: 5,
         },
         textContainer: {
-          flex: 1, // Permite que o texto ocupe o espaço disponível
+          flex: 1, 
         },
         cardName: {
           fontSize: 16,

@@ -22,9 +22,9 @@ module.exports = {
         return new Promise((aceito, rejeitado) => {
           db.query(`SELECT * FROM CartaoD WHERE UserID = ${userID}`, (err, results) => {
             if (err) {
-              rejeitado(err); // Rejeita a promessa em caso de erro
+              rejeitado(err);
             } else {
-              aceito(results); // Resolve a promessa com os resultados da consulta
+              aceito(results);
             }
           });
         });
@@ -33,9 +33,9 @@ module.exports = {
         return new Promise((aceito, rejeitado) => {
           db.query(`SELECT * FROM CartaoC WHERE UserID = ${userID}`, (err, results) => {
             if (err) {
-              rejeitado(err); // Rejeita a promessa em caso de erro
+              rejeitado(err);
             } else {
-              aceito(results); // Resolve a promessa com os resultados da consulta
+              aceito(results);
             }
           });
         });

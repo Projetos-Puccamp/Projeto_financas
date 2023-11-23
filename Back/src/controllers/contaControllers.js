@@ -9,10 +9,7 @@ module.exports = {
         console.log("Valores recebidos no add:", cardData +" valor: ",valor);
         if (valor && cardData && motivo) {
           try {
-            // Chama o serviço para atualizar o saldo
             const novoSaldo = await ContaServices.ADDD(valor, cardData,motivo);
-
-            // Inclui o novo saldo na resposta JSON
             json.result = {
               valor,
               novoSaldo,
@@ -24,7 +21,6 @@ module.exports = {
         } else {
           json.erro = 'Campos não enviados';
         }
-
         res.json(json);
       },
   SUBD: async (req, res) => {
@@ -35,10 +31,7 @@ module.exports = {
     console.log("Valores recebidos no sub:", cardData +" valor: ",valor);
     if (valor && cardData && motivo) {
       try {
-        // Chama o serviço para atualizar o saldo
         const novoSaldo = await ContaServices.SUBD(valor, cardData, motivo);
-
-        // Inclui o novo saldo na resposta JSON
         json.result = {
           valor,
           novoSaldo,
@@ -50,7 +43,6 @@ module.exports = {
     } else {
       json.erro = 'Campos não enviados';
     }
-
     res.json(json);
   },
     SHOW: async (req, res) => {
@@ -63,7 +55,6 @@ module.exports = {
           novoSaldo: conta
         };
         res.json(json);
-
       },
       SHOWC: async (req, res) => {
         let json = { erro: '', result: [] };
@@ -77,7 +68,6 @@ module.exports = {
           novoCredito: conta
         };
         res.json(json);
-
       },
       SHOWG: async (req, res) => {
         let json = { erro: '', result: [] };
@@ -90,19 +80,16 @@ module.exports = {
           novoGasto: conta
         };
         res.json(json);
-
       },
       SUBC: async (req, res) => {
         let json = { erro: '', result: {} };
         let valor = req.body.valor;
         let cardData = req.body.cardData;
+        let motivo = req.body.motivo;
         console.log("Valores recebidos no add:", cardData +" valor: ",valor);
         if (valor && cardData) {
           try {
-            // Chama o serviço para atualizar o saldo
-            const novoCredito = await ContaServices.SUBC(valor, cardData);
-
-            // Inclui o novo saldo na resposta JSON
+            const novoCredito = await ContaServices.SUBC(valor, cardData,motivo);
             json.result = {
               valor,
               novoCredito
@@ -116,18 +103,15 @@ module.exports = {
 
         res.json(json);
       },
-      
   ADDC: async (req, res) => {
     let json = { erro: '', result: {} };
     let valor = req.body.valor;
     let cardData = req.body.cardData;
+    let motivo = req.body.motivo;
     console.log("Valores recebidos no sub:", cardData +" valor: ",valor);
     if (valor && cardData) {
       try {
-        // Chama o serviço para atualizar o saldo
-        const novoCredito = await ContaServices.ADDC(valor, cardData);
-
-        // Inclui o novo saldo na resposta JSON
+        const novoCredito = await ContaServices.ADDC(valor, cardData,motivo);
         json.result = {
           valor,
           novoCredito

@@ -6,20 +6,20 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 const TransferenciaScreen = ({ navigation }) => {
   const [valor, setValor] = useState('');
   const [tipo, setTipo] = useState('entrada');
+  const [motivo, setMotivo] = useState('');
+  const [mostrarMotivo, setMostrarMotivo] = useState(true);
   const route = useRoute();
   const { cardData } = route.params;
   const saldo = route.params.saldo;
-  const [meuSaldo, setMeuSaldo] = useState(saldo);
-
-
   const handleTransferencia = () => {
     if (valor !== '') {
       const valorNumerico = parseFloat(valor);
-
+      const motivoTransferencia = mostrarMotivo ? motivo : 'Não especificar';
       if (tipo === 'gastar') {
         var usuario = {
           valor: valorNumerico,
-          cardData: cardData
+          cardData: cardData,
+          motivo: motivoTransferencia
         };
         const requestOptions = {
           method: 'POST',
@@ -30,46 +30,9 @@ const TransferenciaScreen = ({ navigation }) => {
           body: JSON.stringify(usuario),
           credentials: 'include'
         };
-        // Realiza a requisição para a API
-        fetch('http://192.168.15.32:3001/api/conta/addC', requestOptions)
+        fetch('http://192.168.0.104:3001/api/conta/addC', requestOptions)
           .then(response => response.json())
           .then(data => {
-
-            // Processa a resposta da API
-            if (data) {
-              console.log(data);
-              Alert.alert("tranferencia realizada");
-            } else {
-              // O login falhou, exiba uma mensagem de erro ao usuário
-              console.log("sem data no retorno de api");
-            }
-          })
-          .catch(error => {
-            // Trata erros
-            console.error('Erro:', error);
-          });
-      } else if (tipo === 'pagar') {
-        var usuario = {
-          valor: valorNumerico,
-          cardData: cardData
-        };
-        // Aqui você pode fazer o que quiser com o objeto 'usuario'
-        // Por exemplo, enviar os dados para o servidor através de uma requisição AJAX
-        const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-
-          },
-          body: JSON.stringify(usuario),
-          credentials: 'include'
-        };
-        // Realiza a requisição para a API
-        fetch('http://192.168.15.32:3001/api/conta/subC', requestOptions)
-          .then(response => response.json())
-          .then(data => {
-
-            // Processa a resposta da API
             if (data.erro == '') {
               console.log(data);
               Alert.alert("tranferencia realizada");
@@ -79,7 +42,36 @@ const TransferenciaScreen = ({ navigation }) => {
             }
           })
           .catch(error => {
-            // Trata erros
+            console.error('Erro:', error);
+          });
+      } else if (tipo === 'pagar') {
+        var usuario = {
+          valor: valorNumerico,
+          cardData: cardData,
+          motivo: motivoTransferencia
+        };
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+
+          },
+          body: JSON.stringify(usuario),
+          credentials: 'include'
+        };
+        fetch('http://192.168.0.104:3001/api/conta/subC', requestOptions)
+          .then(response => response.json())
+          .then(data => {
+
+            // Processa a resposta da API
+            if (data.erro == '') {
+              console.log(data);
+              Alert.alert("tranferencia realizada");
+            } else {
+              console.log("sem data no retorno de api");
+            }
+          })
+          .catch(error => {
             console.error('Erro:', error);
           });
       }
@@ -114,6 +106,23 @@ const TransferenciaScreen = ({ navigation }) => {
           <Text style={styles.tipoButtonText}>Pagar</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity
+          style={styles.motivoButton}
+          onPress={() => setMostrarMotivo(!mostrarMotivo)}
+        >
+          <Text style={styles.motivoButtonText}>
+            {mostrarMotivo ? 'Não detalhar' : 'Detalhar'}
+          </Text>
+        </TouchableOpacity>
+  
+        {mostrarMotivo && (
+          <TextInput
+            style={styles.input}
+            placeholder="Detalhe"
+            onChangeText={(text) => setMotivo(text)}
+            value={motivo}
+          />
+        )}
 
       <TouchableOpacity
         style={styles.button}
@@ -166,6 +175,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  motivoButton: {
+    backgroundColor: '#007AFF',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  motivoButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   button: {
     backgroundColor: '#007AFF',
     padding: 16,
@@ -177,11 +198,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  saldoText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 20,
   },
 });
 

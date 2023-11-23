@@ -13,14 +13,13 @@ module.exports = {
         return new Promise((aceito, rejeitado) => {
           db.query(`SELECT * FROM Financiamento WHERE UserID = ${userID}`, (err, results) => {
             if (err) {
-              rejeitado(err); // Rejeita a promessa em caso de erro
+              rejeitado(err);
             } else {
-              aceito(results); // Resolve a promessa com os resultados da consulta
+              aceito(results);
             }
           });
         });
       },
-
       RealizarPagamento: (finanId) => {
         console.log('Adicionando uma parcela paga para o Financiamento com ID:', finanId);
       
@@ -28,28 +27,26 @@ module.exports = {
           db.query(`UPDATE Financiamento SET ParcelasPagas = ParcelasPagas + 1 WHERE FinanciamentoID = ${finanId}`, (err, results) => {
             if (err) {
               console.error('Erro ao executar a query de atualização:', err);
-              reject(err); // Rejeita a promessa em caso de erro
+              reject(err);
             } else {
               console.log('Atualização bem-sucedida:', results);
-              resolve(results); // Resolve a promessa com os resultados da atualização
+              resolve(results);
             }
           });
         });
       },
-
       AtualizarFinanciamento: (novoparcela,finanId,NovonumMeses) => {
         console.log('Atualizando Financiamento com ID:', finanId);
         console.log('Novo Número de Meses:', NovonumMeses);
         console.log('Nova Prestação:', novoparcela);
-      
         return new Promise((resolve, reject) => {
           db.query(`UPDATE Financiamento SET ValorParcela = ${novoparcela}, QuantidadeParcelas = ${NovonumMeses} WHERE FinanciamentoID = ${finanId}`, (err, results) => {
             if (err) {
               console.error('Erro ao executar a query de atualização:', err);
-              reject(err); // Rejeita a promessa em caso de erro
+              reject(err);
             } else {
               console.log('Atualização bem-sucedida:', results);
-              resolve(results); // Resolve a promessa com os resultados da atualização
+              resolve(results);
             }
           });
         });

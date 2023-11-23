@@ -7,10 +7,9 @@ const TransferenciaScreen = ({ navigation }) => {
   const [valor, setValor] = useState('');
   const [tipo, setTipo] = useState('entrada');
   const [motivo, setMotivo] = useState('');
-  const [mostrarMotivo, setMostrarMotivo] = useState(true); // State para controlar a exibição do motivo
+  const [mostrarMotivo, setMostrarMotivo] = useState(true);
   const route = useRoute();
   const { cardData } = route.params;
-  const userID = route.params.userID;
 
   const handleTransferencia = () => {
     if (valor !== '') {
@@ -32,7 +31,7 @@ const TransferenciaScreen = ({ navigation }) => {
         credentials: 'include'
       };
 
-      let url = tipo === 'entrada' ? 'http://192.168.15.32:3001/api/conta/addD' : 'http://192.168.15.32:3001/api/conta/subD';
+      let url = tipo === 'entrada' ? 'http://192.168.0.104:3001/api/conta/addD' : 'http://192.168.0.104:3001/api/conta/subD';
 
       fetch(url, requestOptions)
         .then(response => response.json())
@@ -110,7 +109,7 @@ const TransferenciaScreen = ({ navigation }) => {
       </View>
     );
   };
-  
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,

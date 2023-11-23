@@ -18,7 +18,6 @@ criafinanciamento: async (req, res) => {
       let user = await financiamentoServices.criafinanciamento(nome, userID, total, juros, parcelas, valorp);
       res.json({ autenticado: true,
       ID: user.UserID,});
-    
   },
   listAll: async (req, res) => {
     let userID = req.body.userID;
@@ -30,7 +29,6 @@ criafinanciamento: async (req, res) => {
       res.status(500).json({ message: 'Erro ao buscar cartões de débito.' });
     }
   },
-
   PagamentoFinanciamento: async (req, res) => {
      let  finanId = req.body.FinanId; 
 
@@ -42,7 +40,6 @@ criafinanciamento: async (req, res) => {
       res.status(500).json({ message: 'Erro ao alterar os dados.' });
     }
   },
-
   EstenderPrazo: async (req, res) => {
     let NovonumMeses = parseInt(req.body.NumMeses) + parseInt(req.body.NumMesesE);
     let  valorTotal = parseInt(req.body.ValorT);
@@ -62,6 +59,4 @@ criafinanciamento: async (req, res) => {
      res.status(500).json({ message: 'Erro ao alterar os dados.' });
    }
  }
-
-
 };
