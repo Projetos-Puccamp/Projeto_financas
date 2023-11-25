@@ -167,7 +167,7 @@ module.exports = {
                   return;
                }
               });
-                aceito(novoSaldo);
+                aceito(novogasto);
               });
             });
           });

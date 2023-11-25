@@ -21,7 +21,7 @@ import { Alert } from 'react-native';
     }else{
 
    
-    fetch('http://192.168.0.104:3001/api/financiamento/pagarfinan', {
+    fetch('http://192.168.15.32:3001/api/financiamento/pagarfinan', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ import { Alert } from 'react-native';
       ValorT:   route.params.cardData.ValorTotal,
     };
     console.log("sssssss"+aumentoPrazo.NumMeses+aumentoPrazo.FinanId);
-    fetch('http://192.168.0.104:3001/api/financiamento/estender', {
+    fetch('http://192.168.15.32:3001/api/financiamento/estender', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

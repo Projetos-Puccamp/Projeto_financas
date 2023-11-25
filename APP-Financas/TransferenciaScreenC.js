@@ -30,7 +30,7 @@ const TransferenciaScreen = ({ navigation }) => {
           body: JSON.stringify(usuario),
           credentials: 'include'
         };
-        fetch('http://192.168.0.104:3001/api/conta/addC', requestOptions)
+        fetch('http://192.168.15.32:3001/api/conta/addC', requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.erro == '') {
@@ -59,7 +59,7 @@ const TransferenciaScreen = ({ navigation }) => {
           body: JSON.stringify(usuario),
           credentials: 'include'
         };
-        fetch('http://192.168.0.104:3001/api/conta/subC', requestOptions)
+        fetch('http://192.168.15.32:3001/api/conta/subC', requestOptions)
           .then(response => response.json())
           .then(data => {
 
@@ -130,7 +130,12 @@ const TransferenciaScreen = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Realizar Transferência</Text>
       </TouchableOpacity>
-
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('HistoricoC',{ cardData: cardData })}
+      >
+        <Text style={styles.buttonText}>Histórico</Text>
+        </TouchableOpacity>
 
       <StatusBar style="auto" />
     </View>

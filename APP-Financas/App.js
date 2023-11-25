@@ -14,6 +14,8 @@ import CalculadoraFinanciamentoScreen from './CalculadoraFinanScreen';
 import FinanciamentoScreen from './FinanScreen';
 import AcompanhaFinan from './AcompanhaFinan';
 import CriaFinan from './CriaFinan';
+import HistoricoScreen from './HistScreen';
+import HistoricoScreenC from './HistScreenC';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +56,14 @@ export default function App() {
         <Stack.Screen
           name="Financiamento"
           component={FinanciamentoScreen}
+        />
+        <Stack.Screen
+          name="Historico"
+          component={HistoricoScreen}
+        />
+        <Stack.Screen
+          name="HistoricoC"
+          component={HistoricoScreenC}
         />
         <Stack.Screen
         name="AcompanhaFinanciamento"

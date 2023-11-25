@@ -31,7 +31,7 @@ const TransferenciaScreen = ({ navigation }) => {
         credentials: 'include'
       };
 
-      let url = tipo === 'entrada' ? 'http://192.168.0.104:3001/api/conta/addD' : 'http://192.168.0.104:3001/api/conta/subD';
+      let url = tipo === 'entrada' ? 'http://192.168.15.32:3001/api/conta/addD' : 'http://192.168.15.32:3001/api/conta/subD';
 
       fetch(url, requestOptions)
         .then(response => response.json())
@@ -106,6 +106,12 @@ const TransferenciaScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Realizar Transferência</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
+        <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Historico',{ cardData: cardData })}
+      >
+        <Text style={styles.buttonText}>Histórico</Text>
+        </TouchableOpacity>
       </View>
     );
   };

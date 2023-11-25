@@ -39,5 +39,27 @@ module.exports = {
             }
           });
         });
-      }
+      },
+      listHistD: (cardData) => {
+        return new Promise((aceito, rejeitado) => {
+          db.query(`SELECT * FROM TransacoesD WHERE CartaoDID = ${cardData.CartaoDID}`, (err, results) => {
+            if (err) {
+              rejeitado(err);
+            } else {
+              aceito(results);
+            }
+          });
+        });
+      },
+      listHistC: (cardData) => {
+        return new Promise((aceito, rejeitado) => {
+          db.query(`SELECT * FROM TransacoesC WHERE CartaoCID = ${cardData.CartaoCID}`, (err, results) => {
+            if (err) {
+              rejeitado(err);
+            } else {
+              aceito(results);
+            }
+          });
+        });
+      },
   };

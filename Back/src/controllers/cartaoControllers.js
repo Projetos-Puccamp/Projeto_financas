@@ -46,5 +46,27 @@ criacartaoD: async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Erro ao buscar cartões de crédito.' });
     }
+  },
+  listHistD: async (req, res) => {
+    let cardData = req.body.cardData;
+    try {
+      const results = await cartaoServices.listHistD(cardData);
+      console.log(results);
+      res.status(200).json(results);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erro ao buscar historico.' });
+    }
+  },
+  listHistC: async (req, res) => {
+    let cardData = req.body.cardData;
+    try {
+      const results = await cartaoServices.listHistC(cardData);
+      console.log(results);
+      res.status(200).json(results);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erro ao buscar historico.' });
+    }
   }
 }

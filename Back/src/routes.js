@@ -26,6 +26,8 @@ router.post('/cartao/criacartaoD', CartaoControllers.criacartaoD);
 router.post('/cartao/criacartaoC', CartaoControllers.criacartaoC);
 router.post('/cartao/list', CartaoControllers.listAll);
 router.post('/cartao/listC', CartaoControllers.listAllC);
+router.post('/cartao/listHistD', CartaoControllers.listHistD);
+router.post('/cartao/listHistC', CartaoControllers.listHistC);
 
 //rota de financiamento
 router.post('/financiamento/criafinanciamento', financiamentoControllers.criafinanciamento);
