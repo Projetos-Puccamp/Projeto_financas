@@ -68,5 +68,19 @@ criacartaoD: async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Erro ao buscar historico.' });
     }
+  },
+  salario: async (req, res) => {
+    let cardData = req.body.cardData;
+    let valor = req.body.valor;
+
+    let dataAtual = new Date();
+    let diaAtual = dataAtual.getDate();
+    try {
+      await cartaoServices.salario(cardData);
+      res.status(200);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erro ao buscar historico.' });
+    }
   }
 }

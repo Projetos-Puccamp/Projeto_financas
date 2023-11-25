@@ -62,4 +62,15 @@ module.exports = {
           });
         });
       },
+      salario: (cardData) => {
+        return new Promise((aceito, rejeitado) => {
+          db.query(`SELECT * FROM TransacoesC WHERE CartaoCID = ${cardData.CartaoCID}`, (err, results) => {
+            if (err) {
+              rejeitado(err);
+            } else {
+              aceito(results);
+            }
+          });
+        });
+      }
   };
