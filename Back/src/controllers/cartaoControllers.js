@@ -72,15 +72,32 @@ criacartaoD: async (req, res) => {
   salario: async (req, res) => {
     let cardData = req.body.cardData;
     let valor = req.body.valor;
-
-    let dataAtual = new Date();
-    let diaAtual = dataAtual.getDate();
+    let dia = req.body.dia;
     try {
-      await cartaoServices.salario(cardData);
-      res.status(200);
+      console.log("salario controler: " + cardData.UserID);
+      await cartaoServices.salario(cardData, valor, dia);
+      const results = "A";
+      res.status(200).json(results);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Erro ao buscar historico.' });
+      res.status(500).json({ message: 'Erro ao att salario.' });
+    }
+  },
+  init: async (req,res) =>{
+    try {
+      // Lógica para obter dados usando o serviço "cartaoServices.init"
+      let allS = await cartaoServices.init();
+        
+      // Imprima os dados no console
+      console.log("Dados obtidos com sucesso:", allS);
+  
+      // Responda ao cliente com os dados (opcional)
+      res.status(200).json({ dados: allS });
+    } catch (error) {
+      console.error('Erro ao obter dados:', error);
+  
+      // Responda ao cliente com um erro (status 500 para erro interno do servidor)
+      res.status(500).json({ erro: 'Erro interno do servidor' });
     }
   }
 }

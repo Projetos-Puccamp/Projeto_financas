@@ -69,6 +69,23 @@ const requestOptions = {
               // Trata erros
               console.error('Erro:', error);
             });
+            const initoptions = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include'
+            };
+
+            fetch('http://10.0.2.2:3001/api/init/salario', initoptions)
+              .then(response => response.json())
+              .then(data => {
+                // Faça algo com os dados recebidos, se necessário
+              })
+              .catch(error => {
+                // Trata erros
+                console.error('Erro:', error);
+              });
   };
 
 

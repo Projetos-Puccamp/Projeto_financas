@@ -7,8 +7,6 @@ const TransferenciaScreen = ({ navigation }) => {
   const [valor, setValor] = useState('');
   const [dia, setDia] = useState('');
   const [tipo, setTipo] = useState('entrada');
-  const [motivo, setMotivo] = useState('');
-  const [mostrarMotivo, setMostrarMotivo] = useState(true);
   const route = useRoute();
   const { cardData } = route.params;
 
@@ -18,6 +16,7 @@ const TransferenciaScreen = ({ navigation }) => {
         var NSalario = {
             valor: valor,
             cardData: cardData,
+            dia: dia,
         };
         const requestOptions = {
             method: 'POST',
@@ -28,18 +27,9 @@ const TransferenciaScreen = ({ navigation }) => {
             credentials: 'include'
         };
         fetch('http://10.0.2.2:3001/api/cartao/salario', requestOptions)
-          .then(response => {
-            if (response.ok) {
-              // O status da resposta é 200 (OK)
-              return response.json();
-            } else {
-              // O status da resposta não é 200
-              throw new Error('Erro na requisição');
-            }
-          })
+          .then(response => response.json())
           .then(data => {
-            // Se você chegou até aqui, significa que a resposta foi bem-sucedida (status 200)
-            // Faça o que você precisa fazer com os dados
+          if(data.results === "A")
             Alert.alert('Bem-sucedido', 'A resposta foi bem-sucedida.');
           })
           .catch(error => {
@@ -49,14 +39,13 @@ const TransferenciaScreen = ({ navigation }) => {
           });
 
         setValor('');
-        setMotivo('');
-        setMostrarMotivo(true);
+        setDia('');
       }
     };
 
     return (
       <View style={styles.container}>
-        <Text style={styles.headerText}>Transferências</Text>
+        <Text style={styles.headerText}>Cadastro de recebimento de salario</Text>
 
         <TextInput
           style={styles.input}
@@ -70,7 +59,7 @@ const TransferenciaScreen = ({ navigation }) => {
             placeholder="Digite o dia de recebimento do salário"
             keyboardType="numeric"
             onChangeText={(text) => setDia(text)}
-            value={valor}
+            value={dia}
         />
         <TouchableOpacity style={styles.button} onPress={handleCadastrarSalario}>
         <Text style={styles.buttonText}>Cadastrar Recebimento de Salário</Text>

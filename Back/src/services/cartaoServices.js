@@ -62,9 +62,9 @@ module.exports = {
           });
         });
       },
-      salario: (cardData) => {
+      salario: (cardData, valor, dia) => {
         return new Promise((aceito, rejeitado) => {
-          db.query(`SELECT * FROM TransacoesC WHERE CartaoCID = ${cardData.CartaoCID}`, (err, results) => {
+          db.query(`INSERT INTO Salario (UserID, CartaoDID, DataSal, Valor) VALUES (?,?,?,?)`, [cardData.UserID, cardData.CartaoDID, dia, valor], (err, results) => {
             if (err) {
               rejeitado(err);
             } else {
@@ -72,5 +72,16 @@ module.exports = {
             }
           });
         });
-      }
+      },
+      init: () => {
+        return new Promise((aceito, rejeitado) => {
+          db.query(`SELECT * FROM Salario`, (err, results) => {
+            if (err) {
+              rejeitado(err);
+            } else {
+              aceito(results);
+            }
+          });
+        });
+      },
   };

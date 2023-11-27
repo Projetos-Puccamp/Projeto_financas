@@ -30,6 +30,9 @@ router.post('/cartao/listHistD', CartaoControllers.listHistD);
 router.post('/cartao/listHistC', CartaoControllers.listHistC);
 router.post('/cartao/salario', CartaoControllers.salario);
 
+//rota de init do salario
+router.get('/init/salario', CartaoControllers.init);
+
 //rota de financiamento
 router.post('/financiamento/criafinanciamento', financiamentoControllers.criafinanciamento);
 router.post('/financiamento/listfinanciamento', financiamentoControllers.listAll);

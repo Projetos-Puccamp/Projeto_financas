@@ -1,11 +1,13 @@
 require('dotenv').config({path:'variaveis.env'});
 const express = require('express');
+const router = express.Router();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const server = express();
 const routes = require('./routes');
+const CartaoControllers = require('./controllers/cartaoControllers');
 
 
 server.use(cors());
