@@ -64,7 +64,12 @@ module.exports = {
       },
       salario: (cardData, valor, dia) => {
         return new Promise((aceito, rejeitado) => {
-          db.query(`INSERT INTO Salario (UserID, CartaoDID, DataSal, Valor) VALUES (?,?,?,?)`, [cardData.UserID, cardData.CartaoDID, dia, valor], (err, results) => {
+          const dataAtual = new Date();
+    
+          // Define o dia da data atual para o valor recebido
+          dataAtual.setDate(dia);
+          db.query('INSERT INTO Salario (UserID, CartaoDID, DataSal, Valor, UltimaEntrada) VALUES (?, ?, ?, ?, ?)',
+          [cardData.UserID, cardData.CartaoDID, dia, valor, dataAtual], (err, results) => {
             if (err) {
               rejeitado(err);
             } else {
@@ -73,9 +78,24 @@ module.exports = {
           });
         });
       },
-      init: () => {
+      initV: (dataAtual) => {
         return new Promise((aceito, rejeitado) => {
-          db.query(`SELECT * FROM Salario`, (err, results) => {
+          db.query(`SELECT * FROM Salario Where UltimaEntrada < ?`,[dataAtual], (err, results) => {
+            if (err) {
+              rejeitado(err);
+            } else {
+              const resultadosFormatados = results.map(row => ({
+                ...row,
+                Valor: parseFloat(row.Valor),
+              }));
+              aceito(resultadosFormatados);
+            }
+          });
+        });
+      },
+      initA: (dataAtual) => {
+        return new Promise((aceito, rejeitado) => {
+          db.query('UPDATE Salario SET UltimaEntrada = ? WHERE UltimaEntrada < ?', [dataAtual, dataAtual], (err, results) => {
             if (err) {
               rejeitado(err);
             } else {

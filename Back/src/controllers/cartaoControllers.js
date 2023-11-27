@@ -1,7 +1,6 @@
 const { use } = require('../routes');
 const cartaoServices = require('../services/cartaoServices');
-const UserServices = require('../services/userServices');
-const nodemailer = require('nodemailer');
+const contaServices = require('../services/contaServices');
 
 module.exports = {
 
@@ -85,10 +84,17 @@ criacartaoD: async (req, res) => {
   },
   init: async (req,res) =>{
     try {
-      // Lógica para obter dados usando o serviço "cartaoServices.init"
-      let allS = await cartaoServices.init();
+      const dataAtual = new Date();
+      const dataAtualApenasData = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), dataAtual.getDate());
+
+
+      let allS = await cartaoServices.initV(dataAtualApenasData);
+      
+      for (const row of allS) {
+        await contaServices.ADDD(row.Valor, { UserID: row.UserID, CartaoDID: row.CartaoDID }, 'Lançamento de Salário');
         
-      // Imprima os dados no console
+      }
+      await cartaoServices.initA(dataAtualApenasData);
       console.log("Dados obtidos com sucesso:", allS);
   
       // Responda ao cliente com os dados (opcional)
