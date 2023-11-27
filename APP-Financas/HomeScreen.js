@@ -121,10 +121,78 @@ function HomeScreen({ navigation }) {
         <Text style={styles.buttonText}>Financiamento</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
+      <ListCarteira userID={userID} />
       <CardList userID={userID} />
       <CardListC userID={userID} />
     </View>
   );
+}
+    function ListCarteira({userID}) {
+            const [cards, setCards] = useState([]);
+            const route = useRoute();
+            const navigation = useNavigation();
+            useFocusEffect(
+            React.useCallback(() => {
+                var usuario = {
+                    userID: userID
+                };
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: JSON.stringify(usuario),
+                credentials: 'include'
+            };
+              fetch('http://10.0.2.2:3001/api/cartao/list', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    if(data){
+
+                        setCards(data);
+                        console.log('Dados definidos:', data);
+                    } else {
+                        console.log("Sem data");
+                    }
+                })
+                .catch(error => {
+                console.error('Erro:', error);
+                });
+          }, [])
+               );
+
+               return (
+                 <FlatList
+                   data={[{ key: 'header', text: '' }, ...cards]}
+                   keyExtractor={(item) => item.key}
+                   renderItem={({ item }) => {
+                     if (item.key === 'header' && item.text === 'Meus Cartões De Débito:') {
+                       return <Text style={styles.cardListHeader}>{item.text}</Text>;
+                     }
+
+                     // Altere a condição para verificar se o Nomecartao é 'Carteira'
+                     if (item.Nomecartao === 'Carteira') {
+                       return (
+                         <View style={styles.cardItem}>
+                           <View style={styles.textContainer}>
+                             <Text style={styles.cardName}>{item.Nomecartao}</Text>
+                             <Text style={styles.cardNumber}>Saldo: ${item.Saldo}</Text>
+                           </View>
+                           <TouchableOpacity
+                             style={styles.button}
+                             onPress={() => navigation.navigate('TransferenciaScreen', { cardData: item })}
+                           >
+                             <Text style={styles.buttonText}>Entrar</Text>
+                           </TouchableOpacity>
+                         </View>
+                       );
+                     } else {
+                       return null; // Retorna null para não renderizar outros itens
+                     }
+                   }}
+                 />
+               );
 }
     function CardList({userID}) {
         const [cards, setCards] = useState([]);
@@ -148,6 +216,7 @@ function HomeScreen({ navigation }) {
             .then(response => response.json())
             .then(data => {
                 if(data){
+
                     setCards(data);
                     console.log('Dados definidos:', data);
                 } else {
@@ -161,32 +230,37 @@ function HomeScreen({ navigation }) {
            );
 
            return (
-            <FlatList
-              data={[{ key: 'header', text: 'Meus Cartões De Débito:' }, ...cards]}
-              keyExtractor={(item) => item.key}
-              renderItem={({ item }) => {
-                if (item.key === 'header') {
-                  return (
-                    <Text style={styles.cardListHeader}>{item.text}</Text>
-                  );
-                }
-                return (
-                  <View style={styles.cardItem}>
-                    <View style={styles.textContainer}>
-                      <Text style={styles.cardName}>{item.Nomecartao}</Text>
-                      <Text style={styles.cardNumber}>Saldo: ${item.Saldo}</Text>
-                    </View>
-                    <TouchableOpacity
-                      style={styles.button}
-                      onPress={() => navigation.navigate('TransferenciaScreen', { cardData: item })}
-                    >
-                      <Text style={styles.buttonText}>Entrar</Text>
-                    </TouchableOpacity>
-                  </View>
-                );
-              }}
-            />
-          );
+             <FlatList
+               data={[{ key: 'header', text: 'Meus Cartões De Débito:' }, ...cards]}
+               keyExtractor={(item) => item.key}
+               renderItem={({ item }) => {
+                 if (item.key === 'header' && item.text === 'Meus Cartões De Débito:') {
+                   return <Text style={styles.cardListHeader}>{item.text}</Text>;
+                 }
+
+                 // Adicione uma condição para verificar se o Nomecartao é diferente de 'Carteira'
+                 if (item.Nomecartao !== 'Carteira') {
+                   return (
+                     <View style={styles.cardItem}>
+                       <View style={styles.textContainer}>
+                         <Text style={styles.cardName}>{item.Nomecartao}</Text>
+                         <Text style={styles.cardNumber}>Saldo: ${item.Saldo}</Text>
+                       </View>
+                       <TouchableOpacity
+                         style={styles.button}
+                         onPress={() => navigation.navigate('TransferenciaScreen', { cardData: item })}
+                       >
+                         <Text style={styles.buttonText}>Entrar</Text>
+                       </TouchableOpacity>
+                     </View>
+                   );
+                 } else {
+                   return null; // Retorna null para não renderizar o item 'Carteira'
+                 }
+               }}
+             />
+           );
+
           
             }
     function CardListC({userID}) {
@@ -250,7 +324,7 @@ function HomeScreen({ navigation }) {
                   }}
                 />
               );
-                }              
+                }
 const styles = StyleSheet.create({
   container: {
     flex: 1,

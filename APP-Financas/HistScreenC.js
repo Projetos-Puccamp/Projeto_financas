@@ -20,7 +20,7 @@ const HistScreenC = ({ navigation }) => {
                 body: JSON.stringify(usuario),
                 credentials: 'include'
             };
-            fetch('http://192.168.15.32:3001/api/cartao/listHistC', requestOptions)
+            fetch('http://10.0.2.2:3001/api/cartao/listHistC', requestOptions)
             .then(response => response.json())
             .then(data => {
               if (data) {
