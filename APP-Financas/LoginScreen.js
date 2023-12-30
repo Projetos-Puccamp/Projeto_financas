@@ -20,12 +20,13 @@ function LoginScreen() {
             },
             credentials: 'include',
           };
-    fetch('http://10.0.2.2:3001/api/users/loginauto', requestOptions)
+    fetch('http://192.168.56.1:3001/api/users/loginauto', requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.autenticado) {
-        console.log("login screen autenticado");
-          navigation.navigate('Home', { userID: data.ID });
+            console.log("login screen autenticado");
+            console.log(data.usuarioEncontrado.UserID);
+            navigation.navigate('Home', { userID: data.usuarioEncontrado.UserID });
         }
         // Continue com o login normal
       })
@@ -52,7 +53,7 @@ const requestOptions = {
                 credentials: 'include'
               };
           // Realiza a requisição para a API
-    fetch('http://10.0.2.2:3001/api/users/login', requestOptions)
+    fetch('http://192.168.56.1:3001/api/users/login', requestOptions)
             .then(response => response.json())
             .then(data => {
 
@@ -77,7 +78,7 @@ const requestOptions = {
               credentials: 'include'
             };
 
-            fetch('http://10.0.2.2:3001/api/init/salario', initoptions)
+            fetch('http://192.168.56.1:3001/api/init/salario', initoptions)
               .then(response => response.json())
               .then(data => {
                 // Faça algo com os dados recebidos, se necessário

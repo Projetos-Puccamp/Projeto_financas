@@ -26,7 +26,7 @@ const TransferenciaScreen = ({ navigation }) => {
             body: JSON.stringify(NSalario),
             credentials: 'include'
         };
-        fetch('http://10.0.2.2:3001/api/cartao/salario', requestOptions)
+        fetch('http://192.168.56.1:3001/api/cartao/salario', requestOptions)
           .then(response => response.json())
           .then(data => {
           if(data.results === "A")

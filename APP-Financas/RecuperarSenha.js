@@ -26,7 +26,7 @@ function RecuperarSenha({ navigation }) {
       credentials: 'include'
     };
     // Realiza a requisição para a API
-    fetch('http://192.168.0.104:3001/api/users/redefinir2', requestOptions)
+    fetch('http://192.168.56.1:3001/api/users/redefinir2', requestOptions)
       .then(response => response.json())
       .then(data => {
 
@@ -52,12 +52,6 @@ function RecuperarSenha({ navigation }) {
         placeholder="Seu email de login"
         onChangeText={(text) => setEmail(text)}
         value={email}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Sua nova senha"
-        onChangeText={(text) => setSenha(text)}
-        value={senha}
       />
       <TextInput
         style={styles.input}

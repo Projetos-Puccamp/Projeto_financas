@@ -8,6 +8,7 @@ module.exports = {
           db.query('SELECT * FROM Usuario WHERE EmailLogin =? AND Senha = ?', [email, senha], (error, results) => {
             if (error) { rejeitado(error); return; }
             if (results.length > 0) { 
+              console.log("Validar usuario"+results[0]);
               aceito(results[0]);
             } else { aceito(false); }
           });
@@ -39,8 +40,10 @@ module.exports = {
       },
       atualizarSenha: (email, senha) => {
         return new Promise((aceito, rejeitado) => {
+          console.log("a senha recebida é" + senha);
           db.query('UPDATE Usuario SET Senha = ? where EmailLogin = ?', [senha, email], (error, results) => {
             if (error) { rejeitado(error); return; }
+            console.log("att a senha");
             aceito(results);
           });
         });

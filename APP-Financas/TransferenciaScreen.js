@@ -31,7 +31,7 @@ const TransferenciaScreen = ({ navigation }) => {
         credentials: 'include'
       };
 
-      let url = tipo === 'entrada' ? 'http://10.0.2.2:3001/api/conta/addD' : 'http://10.0.2.2:3001/api/conta/subD';
+      let url = tipo === 'entrada' ? 'http://192.168.56.1:3001/api/conta/addD' : 'http://192.168.56.1:3001/api/conta/subD';
 
       fetch(url, requestOptions)
         .then(response => response.json())

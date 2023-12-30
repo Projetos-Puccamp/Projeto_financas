@@ -1,6 +1,5 @@
 const { use } = require('../routes');
 const UserServices = require('../services/userServices');
-const nodemailer = require('nodemailer');
 
 module.exports = {
 
@@ -27,7 +26,8 @@ login: async (req, res) => {
     if (user) {
       let usuarioEncontrado = await UserServices.validarUsuario(user[0].EmailLogin, user[0].Senha);
       if (usuarioEncontrado.S_N == 'true') {
-        res.json({ autenticado: true });
+
+        res.json({ autenticado: true, usuarioEncontrado});
       } else {
         res.json({ autenticado: false});
       }
@@ -55,30 +55,40 @@ login: async (req, res) => {
     console.log('Rota: entrada no controlador Redefinir');
     let json = { erro: '', result: {} };
     let email = req.body.email;
+  
+    if (!email) {
+      // Se o e-mail não estiver presente, envie uma resposta de erro
+      json.erro = 'E-mail não fornecido';
+      return res.json(json);
+    }
+  
     const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+sgMail.setApiKey("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")
 const msg = {
-  to: email,
-  from: 'cadurockro@gmail.com',
-  subject: 'Codigo para redefinir senha projeto finanças',
-  text: 'Seu código é PROJETO (atento a letras maiusculas)',
-  html: '<strong>Seu código é PROJETO (atento a letras maiusculas)</strong>',
+  to: email, // Change to your recipient
+  from: 'cadurockro@gmail.com', // Change to your verified sende
+  subject: 'Seu código para redefinir senha',
+  text: 'Seu código é PROJETO (atente-se as letras maiusculas)',
+  html: '<strong>Seu código é PROJETO (atente-se as letras maiusculas)</strong>',
 }
 sgMail
   .send(msg)
   .then(() => {
-    console.log('Email sent');
-    json.result = true;
+    console.log('Email sent')
+    let json = { erro: false, result: {} };
   })
   .catch((error) => {
+    console.log("email not sent");
     console.error(error)
   })
-  res.json(json);
+  
+    res.json(json);
   },
-  redefinir2: async (req, res) => {
+   redefinir2: async (req, res) => {
     let email = req.body.email;
     let senha = req.body.senha;
     let cod = req.body.cod;
+    console.log("redefinir2");
     if(cod == 'PROJETO'){
       let user = await UserServices.atualizarSenha(email, senha);
       res.json({ autenticado: true,

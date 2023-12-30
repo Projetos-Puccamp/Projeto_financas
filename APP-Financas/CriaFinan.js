@@ -21,7 +21,7 @@ function CriaFinan({ navigation }) {
     };
 
 
-    fetch('http://192.168.15.32:3001/api/financiamento/criafinanciamento', {
+    fetch('http://192.168.56.1:3001/api/financiamento/criafinanciamento', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

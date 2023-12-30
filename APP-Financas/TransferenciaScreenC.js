@@ -30,7 +30,7 @@ const TransferenciaScreen = ({ navigation }) => {
           body: JSON.stringify(usuario),
           credentials: 'include'
         };
-        fetch('http://10.0.2.2:3001/api/conta/addC', requestOptions)
+        fetch('http://192.168.56.1:3001/api/conta/addC', requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.erro == '') {
@@ -59,7 +59,7 @@ const TransferenciaScreen = ({ navigation }) => {
           body: JSON.stringify(usuario),
           credentials: 'include'
         };
-        fetch('http://10.0.2.2:3001/api/conta/subC', requestOptions)
+        fetch('http://192.168.56.1:3001/api/conta/subC', requestOptions)
           .then(response => response.json())
           .then(data => {
 

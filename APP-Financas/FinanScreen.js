@@ -45,7 +45,7 @@ function ListFinan({userID}) {
         body: JSON.stringify(usuario),
         credentials: 'include'
     };
-      fetch('http://192.168.15.32:3001/api/financiamento/listfinanciamento', requestOptions)
+      fetch('http://192.168.56.1:3001/api/financiamento/listfinanciamento', requestOptions)
         .then(response => response.json())
         .then(data => {
             if(data){

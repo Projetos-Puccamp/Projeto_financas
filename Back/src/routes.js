@@ -7,7 +7,7 @@ const financiamentoControllers = require('./controllers/financiamentoControllers
 
 //rotas de usuario
 router.post('/users/login', UserControllers.login);
-//router.get('/users/loginauto', UserControllers.autoLogin);
+router.get('/users/loginauto', UserControllers.autoLogin);
 router.post('/users/cadastro', UserControllers.cadastro);
 router.post('/users/redefinir', UserControllers.redefinir);
 router.post('/users/redefinir2', UserControllers.redefinir2);

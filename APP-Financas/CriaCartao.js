@@ -33,9 +33,9 @@ function CriaCartao({ navigation }) {
     let apiURL = '';
 
     if (cartaoTipo === 'Crédito') {
-      apiURL = 'http://10.0.2.2:3001/api/cartao/criacartaoC';
+      apiURL = 'http://192.168.56.1:3001/api/cartao/criacartaoC';
     } else {
-      apiURL = 'http://10.0.2.2:3001/api/cartao/criacartaoD';
+      apiURL = 'http://192.168.56.1:3001/api/cartao/criacartaoD';
     }
 
     fetch(apiURL, {
